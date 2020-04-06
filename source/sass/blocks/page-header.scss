@@ -1,0 +1,128 @@
+// .page-header {
+//   display: flex;
+//   flex: 1 0 auto;
+// }
+
+.page-header__container {
+  display: flex;
+  min-height: 91px;
+  width: 100%;
+  min-width: 1024px;
+  max-width: 1310px;
+  margin: 0 auto;
+  padding: 0 32px;
+  padding-right: 70px;
+  padding-top: 25px;
+}
+
+.page-header__navigation-site {
+  margin-left: 2.7%;
+  padding-top: 6px;
+}
+
+.page-header__toogle-nav {
+  display: none;
+}
+
+.page-header__open-popup {
+  display: flex;
+  margin-left: auto;
+
+  &:hover {
+    opacity: 0.5;
+
+    cursor: pointer;
+  }
+}
+
+.page-header__svg {
+  margin-top: 9px;
+}
+
+.page-header__text-btn {
+  margin-top: 12px;
+  margin-left: 10px;
+
+  font-size: 16px;
+  line-height: 19px;
+}
+
+@media (max-width: $tablet-width-max) {
+  .page-header__container {
+    min-height: 69px;
+    min-width: $mobile-width;
+    // max-width: 760px;
+    padding: 0 39px;
+    padding-top: 13px;
+  }
+
+  .page-header__logo {
+    margin-top: 9px;
+  }
+
+  .page-header__text-btn {
+    display: none;
+  }
+
+  .page-header__navigation-site {
+    margin-left: 6.9%;
+  }
+}
+
+@media (max-width: $mobile-width-only) {
+  .page-header__container {
+    flex-wrap: wrap;
+    min-height: 48px;
+    min-width: $mobile-width;
+    // max-width: 320px;
+    // padding: 0 10px;
+    padding: 0;
+    padding-top: 9.5px;
+  }
+
+  .page-header__logo {
+    margin-top: 0;
+    margin-left: 3%;
+  }
+
+  .page-header__open-popup {
+    padding: 0 5px;
+    padding-bottom: 13px;
+    margin-right: 10px;
+  }
+
+  .page-header__navigation-site {
+    order: 1;
+    width: 100%;
+    margin-left: 0;
+    padding-top: 0;
+  }
+
+  .page-header__toogle-nav {
+    display: block;
+    padding: 0 5px;
+    padding-bottom: 10px;
+    margin-left: 10px;
+
+    border: none;
+    background-color: transparent;
+  }
+
+  .page-header__svg {
+    margin-top: 7px;
+    width: 14px;
+    height: 16px;
+  }
+
+  .page-header__navigation-site--closed ul {
+    display: none;
+  }
+
+  .page-header__navigation-site--opened .navigation-list {
+    display: flex;
+  }
+
+  .page-header__navigation-site--nojs .navigation-list {
+    display: flex;
+  }
+}

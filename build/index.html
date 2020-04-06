@@ -12,7 +12,45 @@
   <link rel="preload" href="fonts/Roboto.woff2">
 </head>
 <body>
-  <h1>Добро пожаловать в Лигу А.</h1>
+  <header class="page-header">
+    <div class="page-header__container">
+      <button class="page-header__toogle-nav" type="button">
+        <svg class="page-header__toogle-svg" width="16" height="12">
+          <use xlink:href="img/sprite.svg#icon-burger"></use>
+        </svg>
+        <span class="visually-hidden">Открыть меню</span>
+      </button>
+      <a class="page-header__logo">
+        <picture>
+          <source media="(min-width: 1024px)" srcset="img/logo-big.svg">
+          <source media="(min-width: 768px)" srcset="img/logo-medium.svg">
+          <img class="page-header__logo-image" src="img/logo-min.svg" alt="ЛИГА Банк">
+        </picture>
+      </a>
+      <nav class="page-header__navigation-site page-header__navigation-site--closed page-header__navigation-site--nojs">
+        <ul class="page-header__list-nav navigation-list">
+          <li class="navigation-list__item">
+            <a href="#services" id="scroll" class="navigation-list__item-link">Услуги</a>
+          </li>
+          <li class="navigation-list__item">
+            <a href="#calculator" id="scroll" class="navigation-list__item-link">Рассчитать кредит</a>
+          </li>
+          <li class="navigation-list__item">
+            <a href="#page-footer" id="scroll" class="navigation-list__item-link">Контакты</a>
+          </li>
+          <li class="navigation-list__item">
+            <a href="#" class="navigation-list__item-link">Задать вопрос</a>
+          </li>
+        </ul>
+      </nav>
+      <a class="page-header__open-popup">
+        <svg class="page-header__svg" width="20" height="22">
+          <use xlink:href="img/sprite.svg#icon-open-popup"></use>
+        </svg>
+        <span class="page-header__text-btn">Войти в Интернет-банк</span>
+      </a>
+    </div>
+  </header>
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script src="js/vendor.js"></script>
