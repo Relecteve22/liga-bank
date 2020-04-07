@@ -31,8 +31,13 @@
   min-width: 1024px;
   max-width: 1220px;
   margin: 0 auto;
+}
+
+.list-promo__item-wrapper-text {
   padding: 0 186.5px;
   padding-top: 100px;
+  display: flex;
+  flex-direction: column;
 }
 
 .list-promo__item-title {
@@ -105,6 +110,10 @@
   background-image: url("../img/big-cards.png");
 }
 
+.list-promo__item-image {
+  display: none;
+}
+
 @media (max-width: $tablet-width-max) {
   .list-promo .slick-slide {
     min-height: 300px;
@@ -115,6 +124,9 @@
     min-width: $mobile-width;
     max-width: 760px;
     margin: 0 auto;
+  }
+
+  .list-promo__item-wrapper-text {
     padding: 65px 82px 0;
   }
 
@@ -168,9 +180,14 @@
   }
 
   .list-promo__item-wrapper {
+    flex-direction: row;
     min-height: 226px;
     min-width: $mobile-width;
     max-width: 320px;
+    padding: 0;
+  }
+
+  .list-promo__item-wrapper-text {
     padding: 39px 15px 0;
   }
 
@@ -198,12 +215,25 @@
 
 
   .list-promo__item--bg-cards .list-promo__item-wrapper::after {
-    top: 29px;
-    left: 59.5%;
+    // top: 29px;
+  // left: 59.5%;
 
-    width: 111px;
+  // width: 229px;
+  // height: 156px;
+  // background-image: url("../img/big-card.png");
+  // background-size: 229px 156px;
+    display: none;
+  }
+
+  .list-promo__item-image {
+    display: block;
+    width: 229px;
     height: 156px;
-    background-image: url("../img/min-cards.png");
+    flex-shrink: 1;
+    margin-top: 35px;
+    margin-left: 5px;
+
+    background-size: 229px 156px;
   }
 
   .list-promo__item-title {
@@ -221,7 +251,7 @@
   .list-promo__item-scroll {
     width: 188px;
     min-height: 43px;
-    margin-top: 25px;
+    margin-top: 7px;
     padding-top: 14px;
 
     font-size: 14px;
