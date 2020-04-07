@@ -1,25 +1,6 @@
 'use strict';
 
 (function () {
-  var navMain = document.querySelector('.page-header__navigation-site');
-  var navToggle = document.querySelector('.page-header__toogle-nav');
-
-  navMain.classList.remove('page-header__navigation-site--nojs');
-
-  navToggle.addEventListener('click', function () {
-    if (navMain.classList.contains('page-header__navigation-site--closed')) {
-      navMain.classList.remove('page-header__navigation-site--closed');
-      navMain.classList.add('page-header__navigation-site--opened');
-    } else {
-      navMain.classList.add('page-header__navigation-site--closed');
-      navMain.classList.remove('page-header__navigation-site--opened');
-    }
-  });
-})();
-
-'use strict';
-
-(function () {
   var KEYCODE = {
     esc: 27
   };
@@ -105,38 +86,4 @@
   };
 
   passwordControl.addEventListener('click', showHidePasswordHandler);
-})();
-
-'use strict';
-
-(function () {
-  var linkNav = document.querySelectorAll('[href^="#"]');
-  var v = 0.8;
-  for (var i = 0; i < linkNav.length; i++) {
-    linkNav[i].addEventListener('click', function (event) {
-      event.preventDefault();
-      var w = window.pageYOffset;
-      var hash;
-      var t;
-      var start;
-      hash = this.href.replace(/[^#]*(.*)/, '$1');
-      t = document.querySelector(hash).getBoundingClientRect().top;
-      start = null;
-      requestAnimationFrame(step);
-      function step(time) {
-        if (start === null) {
-          start = time;
-        }
-        var progress = time - start;
-        var r;
-        r = (t < 0 ? Math.max(w - progress / v, w + t) : Math.min(w + progress / v, w + t));
-        window.scrollTo(0, r);
-        if (r != w + t) {
-          requestAnimationFrame(step);
-        } else {
-          location.hash = hash;
-        }
-      }
-    }, false);
-  }
 })();

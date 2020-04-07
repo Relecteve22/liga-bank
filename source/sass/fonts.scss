@@ -8,3 +8,14 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "Roboto";
+  font-display: swap;
+  src:url("../fonts/RobotoMedium.woff2")
+    format("woff2"),
+    url("../fonts/RobotoMedium.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}

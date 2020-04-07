@@ -1,0 +1,139 @@
+.form-popup {
+  display: flex;
+  flex-direction: column;
+  padding-top: 3px;
+}
+
+.form-popup__label {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  margin-top: 26px;
+}
+
+.form-popup__text {
+  margin-bottom: 4px;
+
+  font-size: 16px;
+  line-height: 140%;
+  color: #394959;
+}
+
+.form-popup__input {
+  width: 100%;
+  min-height: 60px;
+  padding: 0 20px;
+  background-color: transparent;
+  border: 1px solid #1f1e25;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.form-popup__input--password {
+  padding-right: 60px;
+}
+
+.form-popup__password-control {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+
+  width: 22px;
+  height: 12px;
+  padding: 0;
+
+  background-image: url("../img/icon-eye-close.svg");
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.form-popup__password-control--view {
+  background-color: red;
+}
+
+.form-popup__link {
+  margin-top: 7px;
+  margin-left: auto;
+
+  font-size: 12px;
+  line-height: 140%;
+  color: #707c87;
+  text-align: right;
+
+  &:hover {
+    opacity: 0.5;
+
+    cursor: pointer;
+  }
+}
+
+.form-popup__button {
+  width: 424px;
+  min-height: 60px;
+  padding: 0 10px;
+  margin-top: 25px;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #f6f7ff;
+  text-align: center;
+
+  background-color: #2c36f2;
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.5;
+
+    cursor: pointer;
+  }
+}
+
+
+@media (max-width: $tablet-width-max) {
+  .form-popup__button {
+    width: 100%;
+  }
+}
+
+@media (max-width: $mobile-width-only) {
+  .form-popup {
+    padding-top: 0;
+  }
+
+  .form-popup__label {
+    margin-top: 20px;
+  }
+
+  .form-popup__password-control {
+    right: 15px;
+  }
+
+  .form-popup__link {
+    order: 1;
+    margin: 0 auto;
+    margin-top: 11px;
+
+    font-size: 14px;
+    line-height: 140%;
+  }
+
+  .form-popup__button {
+    margin-top: 29px;
+    min-height: 51px;
+
+    font-size: 14px;
+    line-height: 16px;
+  }
+}

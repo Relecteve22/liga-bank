@@ -7,11 +7,13 @@
   <meta name="description" content="ЛИГА Банк - оффициальный сайт всемирного банка.">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="author" content="Liga A">
-  <title>LIGA Bank</title>
+  <title>ЛИГА Банк</title>
   <link rel="stylesheet" href="css/style.min.css">
   <link rel="preload" href="fonts/Roboto.woff2">
+  <link rel="preload" href="fonts/RobotoMedium.woff2">
 </head>
 <body>
+  <h1 class="visually-hidden">ЛИГА Банк - оффициальный сайт всемирного банка.</h1>
   <header class="page-header">
     <div class="page-header__container">
       <button class="page-header__toogle-nav" type="button">
@@ -30,16 +32,16 @@
       <nav class="page-header__navigation-site page-header__navigation-site--closed page-header__navigation-site--nojs">
         <ul class="page-header__list-nav navigation-list">
           <li class="navigation-list__item">
-            <a href="#services" id="scroll" class="navigation-list__item-link">Услуги</a>
+            <a id="scroll" class="navigation-list__item-link" href="#services">Услуги</a>
           </li>
           <li class="navigation-list__item">
-            <a href="#calculator" id="scroll" class="navigation-list__item-link">Рассчитать кредит</a>
+            <a id="scroll" class="navigation-list__item-link" href="#calculator">Рассчитать кредит</a>
           </li>
           <li class="navigation-list__item">
-            <a href="#page-footer" id="scroll" class="navigation-list__item-link">Контакты</a>
+            <a id="scroll" class="navigation-list__item-link" href="#page-footer">Контакты</a>
           </li>
           <li class="navigation-list__item">
-            <a href="#" class="navigation-list__item-link">Задать вопрос</a>
+            <a class="navigation-list__item-link">Задать вопрос</a>
           </li>
         </ul>
       </nav>
@@ -47,10 +49,38 @@
         <svg class="page-header__svg" width="20" height="22">
           <use xlink:href="img/sprite.svg#icon-open-popup"></use>
         </svg>
-        <span class="page-header__text-btn">Войти в Интернет-банк</span>
+        <div class="page-header__text-btn">Войти в Интернет-банк</div>
       </a>
     </div>
   </header>
+  <div class="overlay"></div>
+  <section class="popup">
+    <a class="popup__logo">
+      <picture>
+        <source media="(min-width: 1024px)" srcset="img/logo-big-popup.svg">
+        <source media="(min-width: 768px)" srcset="img/logo-medium-popup.svg">
+        <img class="popup__logo-image" src="img/logo-min-popup.svg" alt="ЛИГА Банк">
+      </picture>
+    </a>
+    <button class="popup__close">
+      <span class="visually-hidden">Закрыть попап</span>
+    </button>
+    <h2 class="visually-hidden">Войти в аккаунт</h2>
+    <form action="https://echo.htmlacademy.ru" method="get" class="form-popup js">
+      <label class="form-popup__label">
+        <span class="form-popup__text">Логин</span>
+        <input id="login-popup" class="form-popup__input" type="text" name="login-popup" aria-label="Ваш логин" required="">
+      </label>
+      <label class="form-popup__label">
+        <span class="form-popup__text">Пароль</span>
+        <input class="form-popup__input form-popup__input--password js__input--password" id="password-popup" type="password" name="password-popup" aria-label="Ваш пароль" required="">
+        <button class="form-popup__password-control" type="button">
+        </button>
+      </label>
+      <a class="form-popup__link">Забыли пароль?</a>
+      <button class="form-popup__button" type="submit">Войти</button>
+    </form>
+  </section>
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script src="js/vendor.js"></script>
