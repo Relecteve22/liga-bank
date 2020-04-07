@@ -19,3 +19,15 @@
   font-weight: 500;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "Roboto";
+  font-display: swap;
+  src:url("../fonts/RobotoBold.woff2")
+    format("woff2"),
+    url("../fonts/RobotoBold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+

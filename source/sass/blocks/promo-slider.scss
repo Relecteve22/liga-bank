@@ -1,0 +1,32 @@
+.promo-slider .slick-slider {
+  width: 100%;
+  min-height: 400px;
+}
+
+.promo-slider .slick-dots {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 40px;
+
+  list-style: none;
+}
+
+.promo-slider .slick-dots li {
+  display: flex;
+  width: 10px;
+  height: 10px;
+
+  font-size: none;
+}
+
+.promo-slider .slick-dots li button {
+  max-width: 8px;
+  height: 8px;
+
+  font-size: 0;
+
+  background-color: #2028B6;
+  border: none;
+  border-radius: 20px;
+}
