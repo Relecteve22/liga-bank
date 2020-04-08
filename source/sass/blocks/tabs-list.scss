@@ -1,0 +1,70 @@
+.tabs-list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.tabs-list__item {
+  position: relative;
+
+  display: flex;
+  width: 293px;
+  min-height: 93px;
+}
+
+.tabs-list__item .tabs-list__button-svg {
+  position: absolute;
+  top: 29px;
+}
+
+.tabs-list__item--holding .tabs-list__button-svg {
+  left: 92px;
+}
+
+.tabs-list__item--credits .tabs-list__button-svg {
+  top: 30px;
+  left: 87px;
+}
+
+.tabs-list__item--insurance .tabs-list__button-svg {
+  top: 28px;
+  left: 73px;
+}
+
+.tabs-list__item--online-services .tabs-list__button-svg {
+  top: 28px;
+  left: 59px;
+}
+
+.tabs-list__item--active .tabs-list__button {
+  background-color: #f6f7ff;
+  border-radius: 4px 4px 0 0;
+
+  &:hover {
+    opacity: 1;
+
+    cursor: default;
+  }
+}
+
+.tabs-list__button {
+  width: 100%;
+  height: auto;
+  padding-left: 50px;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  color: #1f1e25;
+
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    opacity: 0.5;
+
+    cursor: pointer;
+  }
+}

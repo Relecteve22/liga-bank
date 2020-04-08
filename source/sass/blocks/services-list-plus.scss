@@ -1,0 +1,33 @@
+.services-list-plus {
+  margin: 0;
+  margin-top: 13px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.services-list-plus li {
+  position: relative;
+
+  width: 400px;
+  margin-top: 15px;
+  padding-left: 21px;
+
+  font-size: 18px;
+  line-height: 130%;
+  color: #1f1e25;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    top: 6px;
+    left: -1px;
+
+    width: 14px;
+    height: 15px;
+
+    background-image: url("../img/icon-tick.svg");
+    background-repeat: no-repeat;
+  }
+}
