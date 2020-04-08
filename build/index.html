@@ -201,31 +201,33 @@
   </main>
   <div class="overlay"></div>
   <section class="popup">
-    <a class="popup__logo">
-      <picture>
-        <source media="(min-width: 1024px)" srcset="img/logo-big-popup.svg">
-        <source media="(min-width: 768px)" srcset="img/logo-medium-popup.svg">
-        <img class="popup__logo-image" src="img/logo-min-popup.svg" alt="ЛИГА Банк">
-      </picture>
-    </a>
-    <button class="popup__close">
-      <span class="visually-hidden">Закрыть попап</span>
-    </button>
-    <h2 class="visually-hidden">Войти в аккаунт</h2>
-    <form action="https://echo.htmlacademy.ru" method="get" class="form-popup js">
-      <label class="form-popup__label">
-        <span class="form-popup__text">Логин</span>
-        <input id="login-popup" class="form-popup__input" type="text" name="login-popup" aria-label="Ваш логин" required="">
-      </label>
-      <label class="form-popup__label">
-        <span class="form-popup__text">Пароль</span>
-        <input class="form-popup__input form-popup__input--password js__input--password" id="password-popup" type="password" name="password-popup" aria-label="Ваш пароль" required="">
-        <button class="form-popup__password-control" type="button">
-        </button>
-      </label>
-      <a class="form-popup__link" href="#">Забыли пароль?</a>
-      <button class="form-popup__button" type="submit">Войти</button>
-    </form>
+    <div class="popup__container">
+      <a class="popup__logo">
+        <picture>
+          <source media="(min-width: 1024px)" srcset="img/logo-big-popup.svg">
+          <source media="(min-width: 768px)" srcset="img/logo-medium-popup.svg">
+          <img class="popup__logo-image" src="img/logo-min-popup.svg" alt="ЛИГА Банк">
+        </picture>
+      </a>
+      <button class="popup__close">
+        <span class="visually-hidden">Закрыть попап</span>
+      </button>
+      <h2 class="visually-hidden">Войти в аккаунт</h2>
+      <form action="https://echo.htmlacademy.ru" method="get" class="form-popup js">
+        <label class="form-popup__label">
+          <span class="form-popup__text">Логин</span>
+          <input id="login-popup" class="form-popup__input" type="text" name="login-popup" aria-label="Ваш логин" required="">
+        </label>
+        <label class="form-popup__label">
+          <span class="form-popup__text">Пароль</span>
+          <input class="form-popup__input form-popup__input--password js__input--password" id="password-popup" type="password" name="password-popup" aria-label="Ваш пароль" required="">
+          <button class="form-popup__password-control" type="button">
+          </button>
+        </label>
+        <a class="form-popup__link" href="#">Забыли пароль?</a>
+        <button class="form-popup__button" type="submit">Войти</button>
+      </form>
+    </div>
   </section>
   <script src="js/vendor.js"></script>
   <script>svg4everybody(); </script>
