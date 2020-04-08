@@ -48,12 +48,20 @@
 }
 
 @media (max-width: $tablet-width-max) {
+  .promo-slider .slick-slider {
+    min-height: 300px;
+  }
+
   .promo-slider .slick-dots {
     margin-top: -21px;
   }
 }
 
 @media (max-width: $mobile-width-only) {
+  .promo-slider .slick-slider {
+    min-height: 226px;
+  }
+
   .promo-slider .slick-dots {
     margin-top: -16px;
     width: 30px;

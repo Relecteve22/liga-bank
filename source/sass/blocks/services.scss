@@ -13,3 +13,33 @@
 .services__wrapper {
   min-height: 410px;
 }
+
+@media (max-width: $tablet-width-max) {
+  .services__container {
+    min-height: 380px;
+    min-width: $mobile-width;
+    // max-width: 760px;
+    padding: 0;
+  }
+
+  .services__wrapper {
+    min-height: 380px;
+  }
+
+  .services .slick-slider {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: $mobile-width-only) {
+  .services__container {
+    min-height: 362px;
+    min-width: $mobile-width;
+    // max-width: 320px;
+  }
+
+  .services__wrapper {
+    min-height: 362px;
+  }
+}

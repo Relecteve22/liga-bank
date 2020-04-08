@@ -54,10 +54,10 @@
   background-image: url("../img/phone-big.png");
 }
 
-
 .list-services__item-title {
   margin: 0;
   width: 375px;
+  z-index: 1;
 
   font-weight: 500;
   font-size: 22px;
@@ -79,6 +79,7 @@
   width: 198px;
   min-height: 51px;
   padding: 16px 10px;
+  z-index: 1;
 
   font-weight: 500;
   font-size: 16px;
@@ -96,10 +97,11 @@
   }
 }
 
-.services-list-plus__item-info {
+.list-services__item-info {
   margin: 0;
   margin-top: 28px;
   width: 350px;
+  z-index: 1;
 
   font-size: 18px;
   line-height: 140%;
@@ -107,6 +109,8 @@
 }
 
 .list-services__item-link {
+  z-index: 1;
+
   font-weight: 500;
   font-size: 18px;
   line-height: 140%;
@@ -121,4 +125,220 @@
 
 .list-services__item--online-services .services-list-plus .services-list-plus__item--special-one {
   width: 245px;
+}
+
+@media (max-width: $tablet-width-max) {
+  .list-services .slick-slide {
+    min-height: 380px;
+    padding: 55px 300px 0 45px;
+
+    &::after {
+      width: 289px;
+      height: 260px;
+    }
+  }
+
+  .list-services__item--holding::after {
+    top: 59px;
+    right: 45px;
+
+    background-image: url("../img/piggy-bank-medium.png");
+  }
+
+  .list-services__item--credits::after {
+    top: 58px;
+    right: 44px;
+
+    background-image: url("../img/car-medium.png");
+  }
+
+  .list-services__item--insurance::after {
+    top: 60px;
+    right: 46px;
+
+    background-image: url("../img/lock-medium.png");
+  }
+
+  .list-services__item--online-services::after {
+    top: 60px;
+    right: 45px;
+
+    background-image: url("../img/phone-medium.png");
+  }
+
+  .list-services__item-title {
+    width: 320px;
+
+    font-size: 18px;
+  }
+
+  .list-services__item--credits .list-services__item-title {
+    width: 260px;
+  }
+
+  .list-services__item--insurance .list-services__item-title {
+    width: 300px;
+  }
+
+  .list-services__item--online-services .list-services__item-title {
+    width: 400px;
+  }
+
+  .list-services__item-link-btn {
+    margin-top: 29px;
+    min-height: 48px;
+    padding: 16px 10px;
+  }
+
+  .list-services .slick-dots {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: -23px;
+    padding: 0;
+    width: 57px;
+    z-index: 100;
+
+    list-style: none;
+  }
+
+  .list-services .slick-dots li {
+    display: flex;
+    width: 8px;
+    height: 8px;
+  }
+
+  .list-services .slick-dots li button {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+
+    font-size: 0;
+
+    background-color: #2028B6;
+    border: none;
+    border-radius: 20px;
+
+    &:hover {
+      opacity: 0.5;
+
+      cursor: pointer;
+    }
+  }
+
+  .list-services .slick-dots .slick-active button {
+    background-color: #e0e0e0;
+  }
+
+  .list-services__item-info {
+    width: 330px;
+
+    font-size: 16px;
+  }
+
+  .list-services__item-link {
+    font-size: 16px;
+  }
+
+  .list-services__item--online-services .services-list-plus li {
+    width: 350px;
+  }
+
+  .list-services__item--online-services .services-list-plus .services-list-plus__item--special-one {
+    width: 220px;
+  }
+}
+
+@media (max-width: $mobile-width-only) {
+  .list-services .slick-slide {
+    min-height: 362px;
+    padding: 54px 15px 0 15px;
+
+    &::after {
+      top: 99px;
+      right: 0;
+
+      width: 87px;
+      height: 113px;
+    }
+  }
+
+  .list-services__item--holding::after {
+    background-image: url("../img/piggy-bank-min.png");
+  }
+
+  .list-services__item--credits::after {
+    background-image: url("../img/car-min.png");
+  }
+
+  .list-services__item--insurance::after {
+    background-image: url("../img/security-min.png");
+  }
+
+  .list-services__item--online-services::after {
+    background-image: url("../img/phone-min.png");
+  }
+
+  .list-services__item-title {
+    width: 100%;
+
+    font-size: 16px;
+  }
+
+  .list-services__item--credits .list-services__item-title {
+    width: 75%;
+  }
+
+  .list-services__item--insurance .list-services__item-title {
+    width: 95%;
+  }
+
+  .list-services__item--online-services .list-services__item-title {
+    width: 84%;
+  }
+
+  .list-services__item-link-btn {
+    width: 100%;
+    margin-top: 27px;
+    min-height: 43px;
+    padding: 12px 10px;
+
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .list-services__item--online-services .services-list-plus li {
+    width: 73%;
+  }
+
+  .list-services__item--online-services .services-list-plus .services-list-plus__item--special-one {
+    width: 65%;
+  }
+
+  .list-services .slick-dots {
+    margin-top: -17px;
+    width: 41px;
+  }
+
+  .list-services .slick-dots li {
+    width: 6px;
+    height: 6px;
+  }
+
+  .list-services .slick-dots li button {
+    width: 6px;
+    height: 6px;
+  }
+
+  .list-services__item-info {
+    width: 98%;
+    margin-top: 24px;
+
+    font-size: 14px;
+  }
+
+  .list-services__item-link {
+    font-size: 14px;
+  }
 }
