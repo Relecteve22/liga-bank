@@ -9,9 +9,9 @@
   <meta name="author" content="Liga A">
   <title>ЛИГА Банк</title>
   <link rel="stylesheet" href="css/style.min.css">
-  <link rel="preload" href="fonts/Roboto.woff2">
-  <link rel="preload" href="fonts/RobotoMedium.woff2">
-  <link rel="preload" href="fonts/RobotoBold.woff2">
+  <link rel="preload" href="fonts/Roboto.woff2" as="font">
+  <link rel="preload" href="fonts/RobotoMedium.woff2" as="font">
+  <link rel="preload" href="fonts/RobotoBold.woff2" as="font">
 </head>
 <body>
   <h1 class="visually-hidden">ЛИГА Банк - оффициальный сайт всемирного банка.</h1>
@@ -81,7 +81,7 @@
             <div class="list-promo__item-wrapper-text">
               <h3 class="list-promo__item-title">Лига Банк</h3>
               <p class="list-promo__item-info">Всегда рядом</p>
-              <a id="scroll" class="list-promo__item-scroll" href="#calculator">Найти отделение</a>
+              <a id="scroll" class="list-promo__item-scroll" href="#map">Найти отделение</a>
             </div>
           </div>
         </div>
@@ -196,6 +196,165 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <section id="calculator" class="calculator">
+      <div class="calculator__container">
+        <h2 class="calculator__title">Кредитный калькулятор</h2>
+        <form action="https://echo.htmlacademy.ru" method="post" class="calculator__form">
+          <div class="calculator__wrapper-step-one-ang-two">
+            <div class="calculator__container-for-step-one-and-two">
+              <div class="calculator__step-one step-one">
+                <h3 class="step-one__title">Шаг 1. Цель кредита</h3>
+                <div class="step-one__wrapper">
+                  <select class="step-one__select">
+                    <option class="step-one__select-item step-one__select-item--page" selected>Выберите цель кредита</option>
+                    <option class="step-one__select-item">Ипотечное кредитование</option>
+                    <option class="step-one__select-item">Автомобильное кредитование</option>
+                    <option class="step-one__select-item">Потребительский кредит</option>
+                  </select>
+                  <!-- <svg class="step-one__select-item-svg step-one__select-item-svg--top" width="18" height="11">
+                    <use xlink:href="img/sprite.svg#arrow-top"></use>
+                  </svg>
+                  <svg class="step-one__select-item-svg step-one__select-item-svg--bottom" width="18" height="11">
+                    <use xlink:href="img/sprite.svg#arrow-bottom"></use>
+                  </svg> -->
+                </div>
+              </div>
+              <!-- <div class="calculator__step-two step-two">
+                <h3 class="step-two__title">Шаг 2. Введите параметры кредита</h3>
+                <ul class="step-two__list list-step-two">
+                  <li class="list-step-two__item">
+                    <h4 class="list-step-two__item-title">
+                      Стоимость
+                      <span class="list-step-two__item-title-type">недвижимости</span>
+                    </h4>
+                    <div class="list-step-two__item-wrapper">
+                      <div class="list-step-two__item-input-wrapper">
+                        <input class="list-step-two__item-input" type="number" min="1200000" max="25000000" value="2 000 000" aria-label="Стоимость">
+                        <span class="list-step-two__item-input-text">рублей</span>
+                      </div>
+                      <button class="list-step-two__item-btn-minus" type="button">
+                        <span class="visually-hidden">Плюс</span>
+                      </button>
+                      <button class="list-step-two__item-btn-plus" type="button">
+                        <span class="visually-hidden">Минус</span>
+                      </button>
+                    </div>
+                    <div class="list-step-two__item-range-text range-text">
+                      <span class="range-text__item">От</span>
+                      <span class="range-text__item range-text__item--from-js">1 200 000</span>
+                      <span class="range-text__item">до</span>
+                      <span class="range-text__item range-text__item--before-js">25 000 000</span>
+                      <span class="range-text__item">рублей</span>
+                    </div>
+                  </li>
+                  <li class="list-step-two__item">
+                    <h4 class="list-step-two__item-title">
+                      Первоначальный взнос
+                    </h4>
+                    <div class="list-step-two__item-wrapper">
+                      <div class="list-step-two__item-input-wrapper">
+                        <input class="list-step-two__item-input" type="number" aria-label="Первоначальный взнос">
+                        <span class="list-step-two__item-input-text">рублей</span>
+                      </div>
+                    </div>
+                    <div class="list-step-two__item-range range">
+                      <div class="range__wrapper">
+                        <div class="range__line">
+                          <button class="range__btn">
+                            <span class="visually-hidden">Ползунок</span>
+                          </button>
+                        </div>
+                        <span class="range__text range__text--js">10</span>
+                        <span class="range__text-type">%</span>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-step-two__item">
+                    <h4 class="list-step-two__item-title">
+                      Срок кредитования
+                    </h4>
+                    <div class="list-step-two__item-wrapper">
+                      <div class="list-step-two__item-input-wrapper">
+                        <input class="list-step-two__item-input" type="number" value="5" min="5" max="30" aria-label="Срок кредитования">
+                        <span class="list-step-two__item-input-text">лет</span>
+                      </div>
+                    </div>
+                    <div class="list-step-two__item-range range">
+                      <div class="range__wrapper">
+                        <div class="range__line">
+                          <button class="range__btn">
+                            <span class="visually-hidden">Ползунок</span>
+                          </button>
+                        </div>
+                        <div class="range__wrapper-text-start">
+                          <span class="range__text">5 лет</span>
+                        </div>
+                        <div class="range__wrapper-text-finsh">
+                          <span class="range__text">30 лет</span>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <label class="list-step-two__additional">
+                  <input type="checkbox" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox" required>
+                  <span class="list-step-two__checkbox-indicator"></span>
+                  <span class="list-step-two__text-additional">Использовать материнский капитал</span>
+                </label>
+              </div> -->
+            </div>
+            <div class="calculator__wrapper-our-offer">
+              <div class="calculator__our-offer our-offer">
+                <h3 class="our-offer__title">Наше предложение</h3>
+                <ul class="our-offer__list list-offers">
+                  <li class="list-offers__item">
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
+                      <span class="list-offers__item-text-pay list-offers__item-text-pay--js"></span>
+                      <span class="list-offers__item-text-type">рублей</span>
+                    </div>
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
+                      <span class="list-offers__item-text-amount">Сумма</span>
+                      <span class="list-offers__item-text-amount-type list-offers__item-text-amount-type--js">ипотеки</span>
+                    </div>
+                  </li>
+                  <li class="list-offers__item">
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
+                      <span class="list-offers__item-text-percent list-offers__item-text-percent--js"></span>
+                      <span class="list-offers__item-text-type">%</span>
+                    </div>
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
+                      <span class="list-offers__item-text">Процентная ставка</span>
+                    </div>
+                  </li>
+                  <li class="list-offers__item">
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
+                      <span class="list-offers__item-text-pay-month list-offers__item-text-pay-month--js"></span>
+                      <span class="list-offers__item-text-type">рублей</span>
+                    </div>
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
+                      <span class="list-offers__item-text">Ежемесячный платеж</span>
+                    </div>
+                  </li>
+                  <li class="list-offers__item">
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
+                      <span class="list-offers__item-text-income-month list-offers__item-text-income-month--js"></span>
+                      <span class="list-offers__item-text-type">рублей</span>
+                    </div>
+                    <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
+                      <span class="list-offers__item-text">Необходимый доход</span>
+                    </div>
+                  </li>
+                </div>
+                <button class="our-offer__btn" type="button">Оформить заявку</button>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="calculator__step-three">
+
+          </div> -->
+        </form>
       </div>
     </section>
   </main>

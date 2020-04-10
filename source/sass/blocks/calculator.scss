@@ -1,0 +1,28 @@
+.calculator__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 1024px;
+  max-width: 1230px;
+  margin: 0 auto;
+  padding: 0 30px;
+  padding-top: 95px;
+}
+
+.calculator__title {
+  margin: 0;
+
+  font-weight: bold;
+  font-size: 41px;
+  line-height: 140%;
+}
+
+.calculator__wrapper-step-one-ang-two {
+  display: flex;
+}
+
+.calculator__container-for-step-one-and-two {
+  display: flex;
+  flex-direction: column;
+  width: 51.3%;
+}
