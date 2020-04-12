@@ -1,0 +1,39 @@
+.list-offers {
+  column-count: 2;
+  column-gap: 12%;
+  column-fill: auto;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.list-offers__item-wrapper-text {
+  margin-top: -2px;
+
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 140%;
+  color: #1f1e25;
+}
+
+.list-offers__item-text {
+  font-size: 16px;
+  line-height: 140%;
+  color: #394959;
+}
+
+.list-offers__item {
+  padding-top: 25px;
+}
+
+
+@media (max-width: $tablet-width-max) {
+  .list-offers {
+    column-count: 0;
+    column-gap: 0;
+    column-fill: none;
+    display: flex;
+    flex-direction: column;
+  }
+}

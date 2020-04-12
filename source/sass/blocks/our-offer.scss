@@ -1,0 +1,37 @@
+.our-offer {
+  background-color: #f6f7ff;
+  border-radius: 4px;
+  padding-left: 58px;
+  padding-right: 36px;
+  padding-top: 52px;
+  min-height: 389px;
+}
+
+.our-offer__title {
+  margin: 0;
+
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 140%;
+  color: #1F1E25;
+}
+
+.our-offer__btn {
+  width: 94%;
+  min-height: 51px;
+  margin-top: 32px;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  color: #f6f7ff;
+  border: none;
+
+  background-color: #2c36f2;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
