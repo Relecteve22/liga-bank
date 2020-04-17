@@ -3,5 +3,8 @@ root: true
 env:
   browser: true
 
+ignorePatterns:
+  ["vendor-*.js", "gulpfile.js"]
+
 extends:
   "htmlacademy/es5"
