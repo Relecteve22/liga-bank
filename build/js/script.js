@@ -1,6 +1,24 @@
 'use strict';
 
 (function () {
+  var ourOffer = document.querySelector('.our-offer');
+
+  var ourOfferCalculator = function () {
+
+  };
+
+  var selectedOption = function () {
+    ourOffer.classList.remove('our-offer--none');
+  };
+
+  window.сalculator = {
+    selectedOption: selectedOption
+  };
+})();
+
+'use strict';
+
+(function () {
   var navMain = document.querySelector('.page-header__navigation-site');
   var navToggle = document.querySelector('.page-header__toogle-nav');
 
@@ -122,6 +140,20 @@ $(document).ready(function () {
 'use strict';
 
 (function () {
+  var inputValuePrice = document.querySelector('.list-step-two__item-input-value--price');
+
+  inputValuePrice.addEventListener('input', (evt) => {
+    const text = evt.target.textContent;
+    
+    // text.toLocaleString("number", {
+    //   year: 'numeric'
+    // });
+   });
+})();
+
+'use strict';
+
+(function () {
   var linkNav = document.querySelectorAll('[href^="#"]');
   var v = 0.8;
   for (var i = 0; i < linkNav.length; i++) {
@@ -155,11 +187,24 @@ $(document).ready(function () {
 
 'use strict';
 $(document).ready(function () {
-  // $('.step-one__select').selectize({
-  //   create: true,
-  //   sortField: 'text'
-  // });
-  $(".step-one__select").selectize();
+  // $('.step-one__select').selectize();
+
+  $('.step-one__select').selectize({
+    onChange: function (value) {
+      window.calculator.selectedOption();
+      if (value === '1') {
+        console.log('1');
+      }
+
+      if (value === '2') {
+        console.log('2');
+      }
+
+      if (value === '3') {
+        console.log('3');
+      }
+    }
+  });
 });
 
 'use strict';

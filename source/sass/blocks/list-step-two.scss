@@ -22,14 +22,25 @@
 }
 
 .list-step-two__item-input {
+  display: none;
+}
+
+.list-step-two__item-input-item {
   width: 100%;
+  padding: 16px 227px;
+  padding-right: 220px;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 140%;
+  color: #1f1e25;
 
   border: 1px solid #1f1e25;
   border-radius: 4px;
 }
 
-// .list-step-two__item-input::-webkit-outer-spin-button,
-// .list-step-two__item-input::-webkit-inner-spin-button {
-//   -webkit-appearance: none;
-//   margin: 0;
-// }
+.list-step-two__item-input::-webkit-outer-spin-button,
+.list-step-two__item-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

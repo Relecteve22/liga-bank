@@ -225,8 +225,11 @@
                     </h4>
                     <div class="list-step-two__item-wrapper">
                       <div class="list-step-two__item-input-wrapper">
-                        <input class="list-step-two__item-input" step="100000" type="number" min="1200000" max="25000000" value="2 000 000" aria-label="Стоимость">
-                        <span class="list-step-two__item-input-text">рублей</span>
+                        <input type="number" class="list-step-two__item-input" step="100000" min="1200000" max="25000000" aria-label="Стоимость">
+                        <div class="list-step-two__item-input-item">
+                          <span class="list-step-two__item-input-value list-step-two__item-input-value--price" contentEditable="true">2000000</span>
+                          <span class="list-step-two__item-input-text">рублей</span>
+                        </div>
                       </div>
                       <button class="list-step-two__item-btn-minus" type="button">
                         <span class="visually-hidden">Плюс</span>
@@ -300,7 +303,7 @@
               </div>
             </div>
             <div class="calculator__wrapper-our-offer">
-              <div class="calculator__our-offer our-offer">
+              <div class="calculator__our-offer our-offer our-offer--none">
                 <h3 class="our-offer__title">Наше предложение</h3>
                 <ul class="our-offer__list list-offers">
                   <li class="list-offers__item">
@@ -346,7 +349,6 @@
             </div>
           </div>
           <!-- <div class="calculator__step-three">
-
           </div> -->
         </form>
       </div>
