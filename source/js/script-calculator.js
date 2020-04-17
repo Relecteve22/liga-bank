@@ -2,6 +2,7 @@
 
 (function () {
   var ourOffer = document.querySelector('.our-offer');
+  var stepTwo = document.querySelector('.our-offer');
 
   var ourOfferCalculator = function () {
 

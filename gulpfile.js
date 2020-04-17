@@ -110,6 +110,15 @@ gulp.task('concat-js-vendor', function () {
     .pipe(gulp.dest('build/js'));
 });
 
+// следим за script-*.js файлами
+gulp.watch('source/js/script-*.js', gulp.series('concat-js-main', 'refresh'));
+// следим за vendor-*.js файлами
+gulp.watch(
+    'source/js/vendor-*.js',
+    gulp.series('concat-js-vendor', 'refresh')
+);
+
+
 gulp.task("build", gulp.series("clean", "copy", "css", "sprite", "html", "concat-js-main", "concat-js-vendor"));
 gulp.task("start", gulp.series("build", "server"));
 

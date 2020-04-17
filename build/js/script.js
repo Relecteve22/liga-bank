@@ -2,6 +2,7 @@
 
 (function () {
   var ourOffer = document.querySelector('.our-offer');
+  var stepTwo = document.querySelector('.our-offer');
 
   var ourOfferCalculator = function () {
 
@@ -186,25 +187,23 @@ $(document).ready(function () {
 })();
 
 'use strict';
-$(document).ready(function () {
-  // $('.step-one__select').selectize();
+// $('.step-one__select').selectize();
 
-  $('.step-one__select').selectize({
-    onChange: function (value) {
-      window.calculator.selectedOption();
-      if (value === '1') {
-        console.log('1');
-      }
-
-      if (value === '2') {
-        console.log('2');
-      }
-
-      if (value === '3') {
-        console.log('3');
-      }
+$('.step-one__select').selectize({
+  onChange: function (value) {
+    window.сalculator.selectedOption();
+    if (value === '1') {
+      console.log('1');
     }
-  });
+
+    if (value === '2') {
+      console.log('2');
+    }
+
+    if (value === '3') {
+      console.log('3');
+    }
+  }
 });
 
 'use strict';
