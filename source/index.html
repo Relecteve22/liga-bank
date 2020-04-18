@@ -215,7 +215,7 @@
                   </select>
                 </div>
               </div>
-              <div class="calculator__step-two step-two">
+              <div class="calculator__step-two step-two step-two--none">
                 <h3 class="step-two__title">Шаг 2. Введите параметры кредита</h3>
                 <ul class="step-two__list list-step-two">
                   <li class="list-step-two__item">
@@ -227,7 +227,7 @@
                       <div class="list-step-two__item-input-wrapper">
                         <input type="number" class="list-step-two__item-input" step="100000"  min="1200000" max="25000000" aria-label="Стоимость">
                         <div class="list-step-two__item-input-item">
-                          <span class="list-step-two__item-input-value list-step-two__item-input-value--price" contentEditable="true">2000000</span>
+                          <span class="list-step-two__item-input-value list-step-two__item-input-value--price" contentEditable="true"></span>
                           <span class="list-step-two__item-input-text">рублей</span>
                         </div>
                       </div>
@@ -253,7 +253,10 @@
                     <div class="list-step-two__item-wrapper">
                       <div class="list-step-two__item-input-wrapper">
                         <input class="list-step-two__item-input" type="number" aria-label="Первоначальный взнос">
-                        <span class="list-step-two__item-input-text">рублей</span>
+                        <div class="list-step-two__item-input-item">
+                          <span class="list-step-two__item-input-value list-step-two__item-input-value--contribution" contentEditable="true"></span>
+                          <span class="list-step-two__item-input-text">рублей</span>
+                        </div>
                       </div>
                     </div>
                     <div class="list-step-two__item-range range">
@@ -296,7 +299,7 @@
                   </li>
                 </ul>
                 <label class="list-step-two__additional">
-                  <input type="checkbox" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox" required>
+                  <input type="checkbox" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--additional" required>
                   <span class="list-step-two__checkbox-indicator"></span>
                   <span class="list-step-two__text-additional">Использовать материнский капитал</span>
                 </label>

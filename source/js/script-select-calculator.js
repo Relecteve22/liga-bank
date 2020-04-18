@@ -3,9 +3,9 @@
 
 $('.step-one__select').selectize({
   onChange: function (value) {
-    window.сalculator.selectedOption();
     if (value === '1') {
       console.log('1');
+      window.сalculator.selectedOptionMortgage();
     }
 
     if (value === '2') {
@@ -15,5 +15,6 @@ $('.step-one__select').selectize({
     if (value === '3') {
       console.log('3');
     }
+    window.сalculator.selectedOption();
   }
 });
