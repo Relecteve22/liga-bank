@@ -278,7 +278,10 @@
                     <div class="list-step-two__item-wrapper">
                       <div class="list-step-two__item-input-wrapper">
                         <input class="list-step-two__item-input" type="number" value="5" min="5" max="30" aria-label="Срок кредитования">
-                        <span class="list-step-two__item-input-text">лет</span>
+                        <div class="list-step-two__item-input-item">
+                          <span class="list-step-two__item-input-value list-step-two__item-input-value--time-credit" contentEditable="true"></span>
+                          <span class="list-step-two__item-input-text">лет</span>
+                        </div>
                       </div>
                     </div>
                     <div class="list-step-two__item-range range">
@@ -299,7 +302,7 @@
                   </li>
                 </ul>
                 <label class="list-step-two__additional">
-                  <input type="checkbox" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--additional" required="">
+                  <input type="checkbox" checked="" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--additional" required="">
                   <span class="list-step-two__checkbox-indicator"></span>
                   <span class="list-step-two__text-additional">Использовать материнский капитал</span>
                 </label>

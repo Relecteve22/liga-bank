@@ -9,10 +9,46 @@
   var inputValuePrice = document.querySelector('.list-step-two__item-input-value--price');
   var percentCredit = document.querySelector('.list-offers__item-text-percent--js');
   var payMonth = document.querySelector('.list-offers__item-text-pay-month--js');
+  var timeCredit = document.querySelector('.list-step-two__item-input-value--time-credit');
+
   var maternityСapital = '470000';
+
+  var monthInYear = 12;
 
   var ourOfferCalculator = function () {
 
+  };
+
+  var payCraditsCalculator = function (valueContributionElement, valuePrice, valueContribution) {
+    var valuePriceReturn = valuePrice;
+
+    if (valueContributionElement) {
+      valuePriceReturn = valuePrice - valueContribution;
+    };
+
+    if (checkboxMaternityСapital.checked) {
+      valuePriceReturn = valuePrice - valueContribution - maternityСapital;
+    };
+
+    return valuePriceReturn;
+  };
+
+  var percentCreditCalculator = function (valuePrice, valueContribution, forText) {
+    var sum = 0;
+    if (valueContribution < (valuePrice * 0.15)) {
+      sum = 0.094;
+      if (forText === true) {
+        sum = '9,40';
+      }
+    }
+    if (valueContribution >= (valuePrice * 0.15)) {
+      sum = 0.085;
+      if (forText === true) {
+        sum = '8,50';
+      }
+    }
+
+    return sum;
   };
 
   var selectedOption = function () {
@@ -31,47 +67,40 @@
     //   };
     // };
 
-    var payCraditsCalculator = function (valuePriceElement, valueContributionElement) {
-      var valuePrice = valuePriceElement.textContent;
-      var valueContribution = valueContributionElement.textContent;
-      var valuePriceReturn = valuePrice;
-
-      if (inputValueContribution) {
-        valuePriceReturn = valuePrice - valueContribution;
-      };
-
-      if (checkboxMaternityСapital.checked) {
-        valuePriceReturn = valuePrice - valueContribution - maternityСapital;
-      };
-
-      return valuePriceReturn;
-    };
-
-    // payCradits.textContent = payCraditsCalculator(inputValuePrice, inputValueContribution);
-
-    var percentCreditCalculator = function () {
-      if (inputValueContribution.textContent < (inputValuePrice.textContent * 0.15)) {
-        percentCredit.textContent = '9,40';
-      }
-      if (inputValueContribution.textContent >= (inputValuePrice.textContent * 0.15)) {
-        percentCredit.textContent = '8,50';
-      }
-    };
+    // var percentCreditCalculator = function () {
+    //   if (inputValueContribution.textContent < (inputValuePrice.textContent * 0.15)) {
+    //     percentCredit.textContent = '9,40';
+    //   }
+    //   if (inputValueContribution.textContent >= (inputValuePrice.textContent * 0.15)) {
+    //     percentCredit.textContent = '8,50';
+    //   }
+    // };
 
     // payCraditsCalculator();
-    percentCreditCalculator();
+    // percentCreditCalculator();
   };
 
   var selectedOptionMortgage = function () {
     var startInfoCredits = {
       price: '2000000',
-      contribution: '200000'
+      contribution: '200000',
+      timeYears: '5'
     };
+
     inputValuePrice.textContent = startInfoCredits.price;
     inputValueContribution.textContent = startInfoCredits.contribution;
-    // var loanAmount = 0;
-    // var annuityPayment = 0;
-    // payMonth.textContent = annuityPayment;
+
+    payCradits.textContent = payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution));
+    percentCredit.textContent = percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution), true);
+
+
+
+
+
+    var loanAmount = payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution));
+    var monthlyInterestRate = (percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution)) / monthInYear).toFixed(5);
+    var annuityPayment = loanAmount * (monthlyInterestRate / (1 - Math.pow((1 + monthlyInterestRate), (startInfoCredits.timeYears * monthInYear * -1))));
+    payMonth.textContent = annuityPayment;
   };
 
   window.сalculator = {
