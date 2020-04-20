@@ -7,7 +7,7 @@
   var inputValueContribution = document.querySelector('.list-step-two__item-input-value--contribution');
   var checkboxMaternityСapital = document.querySelector('.list-step-two__checkbox--additional');
   var inputValuePrice = document.querySelector('.list-step-two__item-input-value--price');
-  var percentCredit = document.querySelector('.list-offers__item-text-percent--js');
+  var percentCreditElement = document.querySelector('.list-offers__item-text-percent--js');
   var payMonth = document.querySelector('.list-offers__item-text-pay-month--js');
   var timeCredit = document.querySelector('.list-step-two__item-input-value--time-credit');
 
@@ -36,13 +36,13 @@
   var percentCreditCalculator = function (valuePrice, valueContribution, forText) {
     var sum = 0;
     if (valueContribution < (valuePrice * 0.15)) {
-      sum = 0.094;
+      sum = 9.4;
       if (forText === true) {
         sum = '9,40';
       }
     }
     if (valueContribution >= (valuePrice * 0.15)) {
-      sum = 0.085;
+      sum = 8.5;
       if (forText === true) {
         sum = '8,50';
       }
@@ -91,17 +91,26 @@
     inputValueContribution.textContent = startInfoCredits.contribution;
 
     payCradits.textContent = payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution));
-    percentCredit.textContent = percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution), true);
+    percentCreditElement.textContent = percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution), true);
+    // var erhtrg = new Decimal(2);
+    // console.log((erhtrg.mul(150)).toString());
 
 
 
-
-
-    var loanAmount = payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution));
-    var monthlyInterestRate = (percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution)) / monthInYear).toFixed(5);
-    var annuityPayment = loanAmount * (monthlyInterestRate / (1 - Math.pow((1 + monthlyInterestRate), (startInfoCredits.timeYears * monthInYear * -1))));
-    payMonth.textContent = annuityPayment;
+    var loanAmount = new Decimal(payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution)));
+    var percentCredit = new Decimal(percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution)));
+    var monthlyInterestRate = percentCredit.div(monthInYear);
+    var annuityCoefficient = (monthlyInterestRate.mul(monthlyInterestRate.add(1).pow(new Decimal(startInfoCredits.timeYears)).mul(monthInYear))).div(monthlyInterestRate.add(1).pow(new Decimal(startInfoCredits.timeYears)).mul(monthInYear).sub(1));
+    var annuityPayment = loanAmount.mul(annuityCoefficient);
+    payMonth.textContent = annuityPayment.toString();
   };
+
+  // function getAnnuityCoeff(monthlyRate) {
+  //   var rate = new Decimal(monthlyRate);
+  //   var numerator = rate.add(1).pow(18).mul(rate);
+  //   var denominator = rate.add(1).pow(18).sub(1);
+  //   return numerator.div(denominator).toString();
+  // }
 
   window.сalculator = {
     selectedOption: selectedOption,
@@ -284,16 +293,16 @@ $(document).ready(function () {
 $('.step-one__select').selectize({
   onChange: function (value) {
     if (value === '1') {
-      console.log('1');
+      // console.log('1');
       window.сalculator.selectedOptionMortgage();
     }
 
     if (value === '2') {
-      console.log('2');
+      // console.log('2');
     }
 
     if (value === '3') {
-      console.log('3');
+      // console.log('3');
     }
     window.сalculator.selectedOption();
   }

@@ -50,6 +50,7 @@
     "node": "8.15"
   },
   "dependencies": {
+    "decimal.js": "^10.2.0",
     "del": "^4.1.1",
     "gulp-concat": "^2.6.1",
     "selectize": "^0.12.6"
