@@ -10,10 +10,14 @@
   var percentCreditElement = document.querySelector('.list-offers__item-text-percent--js');
   var payMonth = document.querySelector('.list-offers__item-text-pay-month--js');
   var timeCredit = document.querySelector('.list-step-two__item-input-value--time-credit');
+  var requiredRevenueElement = document.querySelector('.list-offers__item-text-income-month--js');
+  var inputValuePrice = document.querySelector('.list-step-two__item-input-value--price');
 
   var maternityСapital = '470000';
 
   var monthInYear = 12;
+
+  var isPercentCreditText = true;
 
   var ourOfferCalculator = function () {
 
@@ -36,19 +40,36 @@
   var percentCreditCalculator = function (valuePrice, valueContribution, forText) {
     var sum = 0;
     if (valueContribution < (valuePrice * 0.15)) {
-      sum = 9.4;
+      sum = 0.094;
       if (forText === true) {
         sum = '9,40';
       }
     }
     if (valueContribution >= (valuePrice * 0.15)) {
-      sum = 8.5;
+      sum = 0.085;
       if (forText === true) {
         sum = '8,50';
       }
     }
 
     return sum;
+  };
+
+  var annuityCompute = function (loanAmountNumber, percentCreditNumber, yearsCreditsNumber) {
+    var loanAmount = new Decimal(loanAmountNumber);
+    var percentCredit = new Decimal(percentCreditNumber);
+    var monthPercentCredit = percentCredit.div(monthInYear);
+    monthPercentCredit = new Decimal(monthPercentCredit);
+    var numberForCalculator = new Decimal(1);
+    var annuityCoefficient = monthPercentCredit.div(numberForCalculator.sub(monthPercentCredit.add(1).pow(new Decimal(yearsCreditsNumber).mul(monthInYear).mul(-1))));
+    var annuityPayment = loanAmount.mul(annuityCoefficient);
+    return annuityPayment.toFixed(0).toString();
+  }
+
+  var requiredRevenueCompute = function (payment) {
+    var paymentDecimal = new Decimal(payment);
+    var number = new Decimal(0.45);
+    return paymentDecimal.div(number).toFixed(0).toString();
   };
 
   var selectedOption = function () {
@@ -87,30 +108,39 @@
       timeYears: '5'
     };
 
+    var infoCredits = {
+      price: '2000000',
+      contribution: '200000',
+      timeYears: '5'
+    };
+
+    var annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution))), (percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution))), (startInfoCredits.timeYears));
+
     inputValuePrice.textContent = startInfoCredits.price;
     inputValueContribution.textContent = startInfoCredits.contribution;
 
     payCradits.textContent = payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution));
-    percentCreditElement.textContent = percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution), true);
-    // var erhtrg = new Decimal(2);
-    // console.log((erhtrg.mul(150)).toString());
+    percentCreditElement.textContent = percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution), isPercentCreditText);
+    payMonth.textContent = annuity;
+    requiredRevenueElement.textContent = requiredRevenueCompute(annuity);
 
+    inputValuePrice.addEventListener('input', (evt) => {
+      var text = evt.target.textContent;
+      infoCredits.price = text;
 
+      // if (text >= '25000000') {
+      //   text = '25000000';
+      // }
+    });
 
-    var loanAmount = new Decimal(payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution)));
-    var percentCredit = new Decimal(percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution)));
-    var monthlyInterestRate = percentCredit.div(monthInYear);
-    var annuityCoefficient = (monthlyInterestRate.mul(monthlyInterestRate.add(1).pow(new Decimal(startInfoCredits.timeYears)).mul(monthInYear))).div(monthlyInterestRate.add(1).pow(new Decimal(startInfoCredits.timeYears)).mul(monthInYear).sub(1));
-    var annuityPayment = loanAmount.mul(annuityCoefficient);
-    payMonth.textContent = annuityPayment.toString();
+    inputValuePrice.addEventListener('blur', function () {
+      annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution))), (percentCreditCalculator((infoCredits.price), (infoCredits.contribution))), (infoCredits.timeYears));
+      payCradits.textContent = payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution));
+      percentCreditElement.textContent = percentCreditCalculator((infoCredits.price), (infoCredits.contribution), isPercentCreditText);
+      payMonth.textContent = annuity;
+      requiredRevenueElement.textContent = requiredRevenueCompute(annuity);
+    });
   };
-
-  // function getAnnuityCoeff(monthlyRate) {
-  //   var rate = new Decimal(monthlyRate);
-  //   var numerator = rate.add(1).pow(18).mul(rate);
-  //   var denominator = rate.add(1).pow(18).sub(1);
-  //   return numerator.div(denominator).toString();
-  // }
 
   window.сalculator = {
     selectedOption: selectedOption,
