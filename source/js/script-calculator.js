@@ -12,6 +12,7 @@
   var timeCredit = document.querySelector('.list-step-two__item-input-value--time-credit');
   var requiredRevenueElement = document.querySelector('.list-offers__item-text-income-month--js');
   var inputValuePrice = document.querySelector('.list-step-two__item-input-value--price');
+  var inputsValue = document.querySelectorAll('.list-step-two__item-input-value');
 
   var maternityСapital = '470000';
 
@@ -124,6 +125,16 @@
     payMonth.textContent = annuity;
     requiredRevenueElement.textContent = requiredRevenueCompute(annuity);
 
+    Array.prototype.forEach.call(inputsValue, function (inputValue) {
+      inputValue.addEventListener('input', (evt) => {
+        annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution))), (percentCreditCalculator((infoCredits.price), (infoCredits.contribution))), (infoCredits.timeYears));
+        payCradits.textContent = payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution));
+        percentCreditElement.textContent = percentCreditCalculator((infoCredits.price), (infoCredits.contribution), isPercentCreditText);
+        payMonth.textContent = annuity;
+        requiredRevenueElement.textContent = requiredRevenueCompute(annuity);
+      });
+    });
+
     inputValuePrice.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
       infoCredits.price = text;
@@ -131,14 +142,6 @@
       // if (text >= '25000000') {
       //   text = '25000000';
       // }
-    });
-
-    inputValuePrice.addEventListener('blur', function () {
-      annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution))), (percentCreditCalculator((infoCredits.price), (infoCredits.contribution))), (infoCredits.timeYears));
-      payCradits.textContent = payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution));
-      percentCreditElement.textContent = percentCreditCalculator((infoCredits.price), (infoCredits.contribution), isPercentCreditText);
-      payMonth.textContent = annuity;
-      requiredRevenueElement.textContent = requiredRevenueCompute(annuity);
     });
   };
 
