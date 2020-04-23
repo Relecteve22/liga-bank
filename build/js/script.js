@@ -12,7 +12,13 @@
   var timeCredit = document.querySelector('.list-step-two__item-input-value--time-credit');
   var requiredRevenueElement = document.querySelector('.list-offers__item-text-income-month--js');
   var inputValuePrice = document.querySelector('.list-step-two__item-input-value--price');
+  var inputValueContribution = document.querySelector('.list-step-two__item-input-value--contribution');
   var inputsValue = document.querySelectorAll('.list-step-two__item-input-value');
+  var minAmoutCreditElement = document.querySelector('.min-amout-credit');
+  var minPriceElement = document.querySelector('.range-text__item--from-js');
+  var maxPriceElement = document.querySelector('.range-text__item--before-js');
+  var plusAmountElement = document.querySelector('.list-step-two__item-btn-plus');
+  var minusAmountElement = document.querySelector('.list-step-two__item-btn-minus');
 
   var maternityСapital = '470000';
 
@@ -64,84 +70,203 @@
     var numberForCalculator = new Decimal(1);
     var annuityCoefficient = monthPercentCredit.div(numberForCalculator.sub(monthPercentCredit.add(1).pow(new Decimal(yearsCreditsNumber).mul(monthInYear).mul(-1))));
     var annuityPayment = loanAmount.mul(annuityCoefficient);
-    return annuityPayment.toFixed(0).toString();
+    return annuityPayment.toFixed(0);
   }
 
   var requiredRevenueCompute = function (payment) {
     var paymentDecimal = new Decimal(payment);
     var number = new Decimal(0.45);
-    return paymentDecimal.div(number).toFixed(0).toString();
+    return paymentDecimal.div(number).toFixed(0);
   };
 
   var selectedOption = function () {
     ourOffer.classList.remove('our-offer--none');
     stepTwo.classList.remove('step-two--none');
-
-    // var payCraditsCalculator = function () {
-    //   payCradits.textContent = inputValuePrice.textContent;
-
-    //   if (inputValueContribution) {
-    //     payCradits.textContent = inputValuePrice.textContent - inputValueContribution.textContent;
-    //   };
-
-    //   if (checkboxMaternityСapital.checked) {
-    //     payCradits.textContent = inputValuePrice.textContent - inputValueContribution.textContent - maternityСapital;
-    //   };
-    // };
-
-    // var percentCreditCalculator = function () {
-    //   if (inputValueContribution.textContent < (inputValuePrice.textContent * 0.15)) {
-    //     percentCredit.textContent = '9,40';
-    //   }
-    //   if (inputValueContribution.textContent >= (inputValuePrice.textContent * 0.15)) {
-    //     percentCredit.textContent = '8,50';
-    //   }
-    // };
-
-    // payCraditsCalculator();
-    // percentCreditCalculator();
   };
 
   var selectedOptionMortgage = function () {
     var startInfoCredits = {
-      price: '2000000',
-      contribution: '200000',
-      timeYears: '5'
+      price: 2000000,
+      minPrice: 1200000,
+      maxPrice: 25000000,
+      contribution: 200000,
+      timeYears: 5,
+      step: 100000
     };
 
     var infoCredits = {
-      price: '2000000',
-      contribution: '200000',
-      timeYears: '5'
+      price: 2000000,
+      contribution: 200000,
+      timeYears: 5
     };
 
-    var annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution))), (percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution))), (startInfoCredits.timeYears));
+    var calculatorCompute = function (obj) {
+      var annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution))), (percentCreditCalculator((obj.price), (obj.contribution))), (obj.timeYears));
+      payCradits.textContent = payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution)).toLocaleString();
+      percentCreditElement.textContent = percentCreditCalculator((obj.price), (obj.contribution), isPercentCreditText);
+      payMonth.textContent = Number(annuity).toLocaleString();
+      requiredRevenueElement.textContent = Number(requiredRevenueCompute(annuity)).toLocaleString();
+    };
 
-    inputValuePrice.textContent = startInfoCredits.price;
+    inputValuePrice.textContent = Number(startInfoCredits.price).toLocaleString();
     inputValueContribution.textContent = startInfoCredits.contribution;
-
-    payCradits.textContent = payCraditsCalculator(inputValueContribution, (startInfoCredits.price), (startInfoCredits.contribution));
-    percentCreditElement.textContent = percentCreditCalculator((startInfoCredits.price), (startInfoCredits.contribution), isPercentCreditText);
-    payMonth.textContent = annuity;
-    requiredRevenueElement.textContent = requiredRevenueCompute(annuity);
+    minPriceElement.textContent = startInfoCredits.minPrice.toLocaleString();
+    maxPriceElement.textContent = startInfoCredits.maxPrice.toLocaleString();
+    calculatorCompute(startInfoCredits);
 
     Array.prototype.forEach.call(inputsValue, function (inputValue) {
       inputValue.addEventListener('input', (evt) => {
-        annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution))), (percentCreditCalculator((infoCredits.price), (infoCredits.contribution))), (infoCredits.timeYears));
-        payCradits.textContent = payCraditsCalculator(inputValueContribution, (infoCredits.price), (infoCredits.contribution));
-        percentCreditElement.textContent = percentCreditCalculator((infoCredits.price), (infoCredits.contribution), isPercentCreditText);
-        payMonth.textContent = annuity;
-        requiredRevenueElement.textContent = requiredRevenueCompute(annuity);
+        calculatorCompute(infoCredits);
       });
+    });
+
+    var isMinAmoutCredit = function () {
+      if (infoCredits.price <= 500000) {
+        ourOffer.classList.add('our-offer--none');
+        minAmoutCreditElement.classList.remove('min-amout-credit--none');
+      }
+    };
+
+    var isAmoutCredit = function () {
+      if (infoCredits.price >= 500000) {
+        ourOffer.classList.remove('our-offer--none');
+        minAmoutCreditElement.classList.add('min-amout-credit--none');
+      }
+    };
+
+    plusAmountElement.addEventListener('click', function () {
+      infoCredits.price += startInfoCredits.step;
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
+      infoCredits.contribution = infoCredits.price * 0.1;
+      inputValueContribution.textContent = infoCredits.contribution;
+      calculatorCompute(infoCredits);
+    });
+
+    minusAmountElement.addEventListener('click', function () {
+      infoCredits.price -= startInfoCredits.step;
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
+      infoCredits.contribution = infoCredits.price * 0.1;
+      inputValueContribution.textContent = infoCredits.contribution;
+      calculatorCompute(infoCredits);
     });
 
     inputValuePrice.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
-      infoCredits.price = text;
+      text = Number(text);
+      infoCredits.price = Number(text);
+      inputValuePrice.textContent = Number(text).toLocaleString();
+      infoCredits.contribution = infoCredits.price * 0.1;
+      inputValueContribution.textContent = infoCredits.contribution;
+      // inputValuePrice.textContent = text.toString();
 
-      // if (text >= '25000000') {
-      //   text = '25000000';
-      // }
+      isMinAmoutCredit();
+      isAmoutCredit();
+    });
+
+
+
+
+
+
+
+    var BorderMap = {
+      MIN_Y: 5,
+      MAX_Y: 12,
+      MIN_X: 0
+    };
+    var MyPin = {
+      WIDTH: 12,
+      HEIGHT: 12
+    };
+
+    var pinInputContributionElement = document.querySelector('.range__btn');
+    var rangeLineContributuionElement = document.querySelector('.range__line');
+
+    var getPinLeft = function (left) {
+      if (left < BorderMap.MIN_X) {
+        return BorderMap.MIN_X;
+      }
+
+      if ((left + MyPin.WIDTH) > rangeLineContributuionElement.offsetWidth) {
+        return (rangeLineContributuionElement.offsetWidth) - MyPin.WIDTH;
+      }
+
+      return left;
+    };
+
+    var movePin = function (left) {
+      pinInputContributionElement.style.left = left + 'px';
+    };
+
+    pinInputContributionElement.addEventListener('mousedown', function (evt) {
+      evt.preventDefault();
+
+      var startCoords = {
+        x: evt.clientX
+      };
+
+      var dragged = false;
+
+      var MouseMoveHandler = function (moveEvt) {
+        moveEvt.preventDefault();
+        dragged = true;
+
+        var shift = {
+          x: startCoords.x - moveEvt.clientX
+        };
+
+        startCoords = {
+          x: moveEvt.clientX
+        };
+
+        var coodXLeftMyPin = pinInputContributionElement.offsetLeft - shift.x;
+
+        // var updateAddress = function (left, top) {
+        //   window.map.inputCordenatios.value = (left + Math.floor(mysharpMarkX)) + ', ' + (top + MyPin.HEIGHT);
+        // };
+
+        var left = getPinLeft(coodXLeftMyPin);
+
+        movePin(left);
+
+        // updateAddress(left, top);
+      };
+
+      var MouseUpHandler = function (upEvt) {
+        upEvt.preventDefault();
+
+        document.removeEventListener('mousemove', MouseMoveHandler);
+        document.removeEventListener('mouseup', MouseUpHandler);
+
+        if (dragged) {
+          var ClickPreventDefaultHandler = function (defaultEvt) {
+            defaultEvt.preventDefault();
+            pinInputContributionElement.removeEventListener('click', ClickPreventDefaultHandler);
+          };
+          pinInputContributionElement.addEventListener('click', ClickPreventDefaultHandler);
+        }
+      };
+      document.addEventListener('mousemove', MouseMoveHandler);
+      document.addEventListener('mouseup', MouseUpHandler);
+    });
+
+
+
+
+
+
+
+
+
+    inputValueContribution.addEventListener('input', (evt) => {
+      var text = evt.target.textContent;
+      infoCredits.contribution = text.toLocaleString();
+
+      if (text >= startInfoCredits.maxPrice) {
+        text = startInfoCredits.maxPrice;
+      }
+      isMinAmoutCredit();
+      isAmoutCredit();
     });
   };
 
