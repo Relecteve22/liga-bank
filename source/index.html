@@ -254,20 +254,16 @@
                       <div class="list-step-two__item-input-wrapper">
                         <input class="list-step-two__item-input" type="number" aria-label="Первоначальный взнос">
                         <div class="list-step-two__item-input-item">
-                          <span class="list-step-two__item-input-value list-step-two__item-input-value--contribution" contentEditable="true"></span>
+                          <span class="list-step-two__item-input-value list-step-two__item-input-value--contribution" contentEditable="true" max="6"></span>
                           <span class="list-step-two__item-input-text">рублей</span>
                         </div>
                       </div>
                     </div>
                     <div class="list-step-two__item-range range">
                       <div class="range__wrapper">
-                        <div class="range__line">
-                          <button class="range__btn" type="button">
-                            <span class="visually-hidden">Ползунок</span>
-                          </button>
-                        </div>
-                        <!-- <span class="range__text range__text--js">10</span>
-                        <span class="range__text-type">%</span> -->
+                        <input class="range__input range__input--contribution" type="range" min="10" max="100" value="10" step="5">
+                        <span class="range__text range__text--js">10</span>
+                        <span class="range__text-type">%</span>
                       </div>
                     </div>
                   </li>

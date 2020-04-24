@@ -90,22 +90,53 @@
       minPrice: 1200000,
       maxPrice: 25000000,
       contribution: 200000,
+      contributionNumber: 10,
       timeYears: 5,
-      step: 100000
+      step: 100000,
+      minCreditAmount: 500000
     };
 
     var infoCredits = {
       price: 2000000,
       contribution: 200000,
+      contributionNumber: 10,
       timeYears: 5
+    };
+
+    var infoCreditsOurOffers = {
+      amount: 0,
+      contributionNumber: 0,
+      amountFromMounth: 0,
+      minAmount: 0
+    };
+
+    var isMinAmoutCredit = function () {
+      if (infoCreditsOurOffers.amount <= startInfoCredits.minCreditAmount) {
+        ourOffer.classList.add('our-offer--none');
+        minAmoutCreditElement.classList.remove('min-amout-credit--none');
+      }
+    };
+
+    var isAmoutCredit = function () {
+      if (infoCreditsOurOffers.amount >= startInfoCredits.minCreditAmount) {
+        ourOffer.classList.remove('our-offer--none');
+        minAmoutCreditElement.classList.add('min-amout-credit--none');
+      }
     };
 
     var calculatorCompute = function (obj) {
       var annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution))), (percentCreditCalculator((obj.price), (obj.contribution))), (obj.timeYears));
-      payCradits.textContent = payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution)).toLocaleString();
-      percentCreditElement.textContent = percentCreditCalculator((obj.price), (obj.contribution), isPercentCreditText);
-      payMonth.textContent = Number(annuity).toLocaleString();
-      requiredRevenueElement.textContent = Number(requiredRevenueCompute(annuity)).toLocaleString();
+      infoCreditsOurOffers.amount = payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution));
+      infoCreditsOurOffers.contributionNumber = percentCreditCalculator((obj.price), (obj.contribution), isPercentCreditText);
+      infoCreditsOurOffers.amountFromMounth = Number(annuity);
+      infoCreditsOurOffers.minAmount = Number(requiredRevenueCompute(annuity));
+      payCradits.textContent = infoCreditsOurOffers.amount.toLocaleString();
+      percentCreditElement.textContent = infoCreditsOurOffers.contributionNumber;
+      payMonth.textContent = infoCreditsOurOffers.amountFromMounth.toLocaleString();
+      requiredRevenueElement.textContent = infoCreditsOurOffers.minAmount.toLocaleString();
+
+      isMinAmoutCredit();
+      isAmoutCredit();
     };
 
     inputValuePrice.textContent = Number(startInfoCredits.price).toLocaleString();
@@ -120,24 +151,11 @@
       });
     });
 
-    var isMinAmoutCredit = function () {
-      if (infoCredits.price <= 500000) {
-        ourOffer.classList.add('our-offer--none');
-        minAmoutCreditElement.classList.remove('min-amout-credit--none');
-      }
-    };
-
-    var isAmoutCredit = function () {
-      if (infoCredits.price >= 500000) {
-        ourOffer.classList.remove('our-offer--none');
-        minAmoutCreditElement.classList.add('min-amout-credit--none');
-      }
-    };
-
     plusAmountElement.addEventListener('click', function () {
       infoCredits.price += startInfoCredits.step;
       inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
-      infoCredits.contribution = infoCredits.price * 0.1;
+      var infoCreditsContribution = new Decimal(infoCredits.price);
+      infoCredits.contribution = infoCreditsContribution.mul((new Decimal(startInfoCredits.contributionNumber)).mul(0.01));
       inputValueContribution.textContent = infoCredits.contribution;
       calculatorCompute(infoCredits);
     });
@@ -145,7 +163,8 @@
     minusAmountElement.addEventListener('click', function () {
       infoCredits.price -= startInfoCredits.step;
       inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
-      infoCredits.contribution = infoCredits.price * 0.1;
+      var infoCreditsContribution = new Decimal(infoCredits.price);
+      infoCredits.contribution = infoCreditsContribution.mul((new Decimal(startInfoCredits.contributionNumber)).mul(0.01));
       inputValueContribution.textContent = infoCredits.contribution;
       calculatorCompute(infoCredits);
     });
@@ -155,118 +174,74 @@
       text = Number(text);
       infoCredits.price = Number(text);
       inputValuePrice.textContent = Number(text).toLocaleString();
-      infoCredits.contribution = infoCredits.price * 0.1;
+      var infoCreditsContribution = new Decimal(infoCredits.price);
+      infoCredits.contribution = infoCreditsContribution.mul((new Decimal(startInfoCredits.contributionNumber)).mul(0.01));
       inputValueContribution.textContent = infoCredits.contribution;
-      // inputValuePrice.textContent = text.toString();
 
-      isMinAmoutCredit();
-      isAmoutCredit();
+      calculatorCompute(infoCredits);
+    });
+
+    inputValuePrice.addEventListener('blur', function () {
+      var text = inputValuePrice.textContent;
+      text = Number(text);
+
+      if (text >= startInfoCredits.maxPrice) {
+        inputValuePrice.textContent = startInfoCredits.maxPrice;
+      }
+      if (text <= startInfoCredits.minPrice) {
+        inputValuePrice.textContent = startInfoCredits.minPrice;
+      }
+
+      calculatorCompute(infoCredits);
     });
 
 
 
 
 
+    var rangeInputContribution = document.querySelector('.range__input--contribution');
+    var rangeText = document.querySelector('.range__text--js');
 
+    rangeInputContribution.addEventListener('change', function () {
+      infoCredits.contributionNumber = rangeInputContribution.value;
+      rangeText.textContent = rangeInputContribution.value;
+      var infoCreditsContribution = new Decimal(infoCredits.price);
+      infoCredits.contribution = infoCreditsContribution.mul((new Decimal(infoCredits.contributionNumber)).mul(0.01));
+      inputValueContribution.textContent = infoCredits.contribution;
 
-    var BorderMap = {
-      MIN_Y: 5,
-      MAX_Y: 12,
-      MIN_X: 0
-    };
-    var MyPin = {
-      WIDTH: 12,
-      HEIGHT: 12
-    };
-
-    var pinInputContributionElement = document.querySelector('.range__btn');
-    var rangeLineContributuionElement = document.querySelector('.range__line');
-
-    var getPinLeft = function (left) {
-      if (left < BorderMap.MIN_X) {
-        return BorderMap.MIN_X;
-      }
-
-      if ((left + MyPin.WIDTH) > rangeLineContributuionElement.offsetWidth) {
-        return (rangeLineContributuionElement.offsetWidth) - MyPin.WIDTH;
-      }
-
-      return left;
-    };
-
-    var movePin = function (left) {
-      pinInputContributionElement.style.left = left + 'px';
-    };
-
-    pinInputContributionElement.addEventListener('mousedown', function (evt) {
-      evt.preventDefault();
-
-      var startCoords = {
-        x: evt.clientX
-      };
-
-      var dragged = false;
-
-      var MouseMoveHandler = function (moveEvt) {
-        moveEvt.preventDefault();
-        dragged = true;
-
-        var shift = {
-          x: startCoords.x - moveEvt.clientX
-        };
-
-        startCoords = {
-          x: moveEvt.clientX
-        };
-
-        var coodXLeftMyPin = pinInputContributionElement.offsetLeft - shift.x;
-
-        // var updateAddress = function (left, top) {
-        //   window.map.inputCordenatios.value = (left + Math.floor(mysharpMarkX)) + ', ' + (top + MyPin.HEIGHT);
-        // };
-
-        var left = getPinLeft(coodXLeftMyPin);
-
-        movePin(left);
-
-        // updateAddress(left, top);
-      };
-
-      var MouseUpHandler = function (upEvt) {
-        upEvt.preventDefault();
-
-        document.removeEventListener('mousemove', MouseMoveHandler);
-        document.removeEventListener('mouseup', MouseUpHandler);
-
-        if (dragged) {
-          var ClickPreventDefaultHandler = function (defaultEvt) {
-            defaultEvt.preventDefault();
-            pinInputContributionElement.removeEventListener('click', ClickPreventDefaultHandler);
-          };
-          pinInputContributionElement.addEventListener('click', ClickPreventDefaultHandler);
-        }
-      };
-      document.addEventListener('mousemove', MouseMoveHandler);
-      document.addEventListener('mouseup', MouseUpHandler);
+      calculatorCompute(infoCredits);
     });
-
-
-
-
-
-
-
-
 
     inputValueContribution.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
-      infoCredits.contribution = text.toLocaleString();
+      // inputValueContribution.textContent = inputValueContribution.textContent.replace (/[^0-9+]/g, '');
+      text = Number(text);
+      infoCredits.contribution = text;
 
-      if (text >= startInfoCredits.maxPrice) {
-        text = startInfoCredits.maxPrice;
+      var infoCreditsContributionDecimal = new Decimal(infoCredits.contribution);
+      var rangeTextDinamyc = (infoCreditsContributionDecimal.div(infoCredits.price)).div(0.01).toFixed(0);
+      infoCredits.contributionNumber = rangeTextDinamyc;
+      rangeText.textContent = infoCredits.contributionNumber;
+      rangeInputContribution.value = infoCredits.contributionNumber;
+
+      calculatorCompute(infoCredits);
+    });
+
+    inputValueContribution.addEventListener('blur', function () {
+      var infoCreditsContribution = new Decimal(infoCredits.price);
+      var text = inputValueContribution.textContent;
+      text = Number(text);
+
+      if (text >= (new Decimal(infoCredits.price))) {
+        inputValueContribution.textContent = new Decimal(infoCredits.price);
+        infoCredits.contribution = new Decimal(infoCredits.price);
       }
-      isMinAmoutCredit();
-      isAmoutCredit();
+      if (text <= infoCreditsContribution.mul((new Decimal(infoCredits.contributionNumber)).mul(0.01))) {
+        inputValueContribution.textContent = infoCreditsContribution.mul((new Decimal(infoCredits.contributionNumber)).mul(0.01).toString());
+        infoCredits.contribution = infoCreditsContribution.mul((new Decimal(infoCredits.contributionNumber)).mul(0.01));
+      }
+
+      calculatorCompute(infoCredits);
     });
   };
 
