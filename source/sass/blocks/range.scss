@@ -1,5 +1,17 @@
 .range {
-  margin-top: 10px;
+  margin-top: 13px;
+}
+
+.range__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  font-size: 14px;
+  color: #707c87;
+}
+
+.range__wrapper-text-finish {
+  margin-left: auto;
 }
 
 .range input[type=range] {

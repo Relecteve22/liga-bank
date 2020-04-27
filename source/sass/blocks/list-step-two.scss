@@ -1,12 +1,13 @@
 .list-step-two {
   margin: 0;
+  margin-bottom: 7px;
   padding: 0;
 
   list-style: none;
 }
 
 .list-step-two li {
-  margin-top: 16px;
+  margin-top: 17px;
 }
 
 .list-step-two__item-title {
@@ -29,8 +30,8 @@
 
 .list-step-two__item-input-item {
   width: 100%;
-  padding: 16px 227px;
-  padding-right: 220px;
+  padding: 16px 0 17px 0;
+  text-align: center;
 
   font-weight: 500;
   font-size: 18px;
@@ -71,4 +72,50 @@
   background-color: transparent;
   background-image: url("../img/icon-plus.svg");
   border: none;
+}
+
+.list-step-two__additional {
+  display: flex;
+  margin-top: 10px;
+}
+
+.list-step-two__text-additional {
+  padding-left: 8px;
+
+  font-size: 16px;
+  color: #1f1e25;
+}
+
+.list-step-two__checkbox-indicator {
+  position: relative;
+
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+
+  background-color: #2c36f2;
+  border-radius: 2px;
+
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+.list-step-two__checkbox:checked + .list-step-two__checkbox-indicator::after {
+  content: "";
+
+  position: absolute;
+  top: 6px;
+  left: 4px;
+
+  width: 8px;
+  height: 7px;
+
+  background-image: url("../img/icon-tick-form.svg");
+  background-repeat: no-repeat;
+}
+
+.list-step-two__additional--none {
+  display: none;
 }

@@ -220,7 +220,7 @@
                 <ul class="step-two__list list-step-two">
                   <li class="list-step-two__item">
                     <h4 class="list-step-two__item-title">
-                      Стоимость
+                      <span class="list-step-two__item-title">Стоимость</span>
                       <span class="list-step-two__item-title-type">недвижимости</span>
                     </h4>
                     <div class="list-step-two__item-wrapper">
@@ -254,7 +254,7 @@
                       <div class="list-step-two__item-input-wrapper">
                         <input class="list-step-two__item-input" type="number" aria-label="Первоначальный взнос">
                         <div class="list-step-two__item-input-item">
-                          <span class="list-step-two__item-input-value list-step-two__item-input-value--contribution" contentEditable="true" max="6"></span>
+                          <span class="list-step-two__item-input-value list-step-two__item-input-value--contribution" contentEditable="true"></span>
                           <span class="list-step-two__item-input-text">рублей</span>
                         </div>
                       </div>
@@ -262,7 +262,7 @@
                     <div class="list-step-two__item-range range">
                       <div class="range__wrapper">
                         <input class="range__input range__input--contribution" type="range" min="10" max="100" value="10" step="5">
-                        <span class="range__text range__text--js">10</span>
+                        <span class="range__text range__text--js-contribution"></span>
                         <span class="range__text-type">%</span>
                       </div>
                     </div>
@@ -275,32 +275,40 @@
                       <div class="list-step-two__item-input-wrapper">
                         <input class="list-step-two__item-input" type="number" value="5" min="5" max="30" aria-label="Срок кредитования">
                         <div class="list-step-two__item-input-item">
-                          <span class="list-step-two__item-input-value list-step-two__item-input-value--time-credit" contentEditable="true">5</span>
+                          <span class="list-step-two__item-input-value list-step-two__item-input-value--time-credit" contentEditable="true"></span>
                           <span class="list-step-two__item-input-text">лет</span>
                         </div>
                       </div>
                     </div>
                     <div class="list-step-two__item-range range">
                       <div class="range__wrapper">
-                        <div class="range__line">
-                          <button class="range__btn">
-                            <span class="visually-hidden">Ползунок</span>
-                          </button>
-                        </div>
+                        <input class="range__input range__input--yearsCredit" type="range" min="5" max="30" value="5" step="1">
                         <div class="range__wrapper-text-start">
-                          <span class="range__text">5 лет</span>
+                          <span class="range__value"></span>
+                          <span class="range__text">лет</span>
                         </div>
-                        <div class="range__wrapper-text-finsh">
-                          <span class="range__text">30 лет</span>
+                        <div class="range__wrapper-text-finish">
+                          <span class="range__value"></span>
+                          <span class="range__text">лет</span>
                         </div>
                       </div>
                     </div>
                   </li>
                 </ul>
-                <label class="list-step-two__additional">
-                  <input type="checkbox" checked name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--additional" required>
+                <label class="list-step-two__additional list-step-two__additional--maternity-capital">
+                  <input type="checkbox" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--additional" required>
                   <span class="list-step-two__checkbox-indicator"></span>
                   <span class="list-step-two__text-additional">Использовать материнский капитал</span>
+                </label>
+                <label class="list-step-two__additional list-step-two__additional--CASCO">
+                  <input type="checkbox" name="additional-CASCO" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--CASCO" required>
+                  <span class="list-step-two__checkbox-indicator"></span>
+                  <span class="list-step-two__text-additional">Оформить КАСКО в нашем банке</span>
+                </label>
+                <label class="list-step-two__additional list-step-two__additional--insurance-life">
+                  <input type="checkbox" name="additional-insurance-life" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--insurance-life" required>
+                  <span class="list-step-two__checkbox-indicator"></span>
+                  <span class="list-step-two__text-additional">Оформить Страхование жизни в нашем банке</span>
                 </label>
               </div>
             </div>
@@ -310,12 +318,11 @@
                 <ul class="our-offer__list list-offers">
                   <li class="list-offers__item">
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
-                      <span class="list-offers__item-text-pay list-offers__item-text-pay--js">1 330 000</span>
+                      <span class="list-offers__item-text-pay list-offers__item-text-pay--js"></span>
                       <span class="list-offers__item-text-type">рублей</span>
                     </div>
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
-                      <span class="list-offers__item-text list-offers__item-text-amount">Сумма</span>
-                      <span class="list-offers__item-text list-offers__item-text-amount-type list-offers__item-text-amount-type--js">ипотеки</span>
+                      <span class="list-offers__item-text list-offers__item-text-amount list-offers__item-text-amount--js"></span>
                     </div>
                   </li>
                   <li class="list-offers__item">

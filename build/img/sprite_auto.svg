@@ -19,6 +19,8 @@
 <path d="M0 0V30.4287H2.48008V33H5.44779V30.4287H28.5522V33H31.5199V30.4287H34V0H0ZM2.51162 27.7466V2.68218H31.4884V27.7466H2.51162Z" fill="#2C36F2"/>
 </symbol><symbol id="icon-security" viewBox="0 0 28 34">
 <path d="M27.9234 5.31216C22.1552 5.31216 17.7362 3.65462 13.9995 0C10.2631 3.65462 5.84431 5.31216 0.0766133 5.31216C0.0766133 14.8295 -1.88138 28.4631 13.9994 34C29.8813 28.4632 27.9234 14.8296 27.9234 5.31216ZM12.8461 22.0601L8.2074 17.3939L10.2843 15.3051L12.8461 17.8823L17.7151 12.9849L19.7919 15.0737L12.8461 22.0601Z" fill="#565EF5"/>
+</symbol><symbol id="icon-tick-form" viewBox="0 0 8 6">
+<path d="M1 2.14286L3.5 5L7 1" stroke="#F6F7FF"/>
 </symbol><symbol id="icon-tick" viewBox="0 0 13 10">
 <path d="M1 4L6.2381 9L12 1" stroke="#1F1E25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol><symbol id="logo-big-popup" viewBox="0 0 151 31">
