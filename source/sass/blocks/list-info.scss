@@ -1,0 +1,50 @@
+.list-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  padding-top: 15px;
+  margin: 0;
+
+  list-style: none;
+}
+
+.list-info__item {
+  display: flex;
+  width: 100%;
+  min-height: 54px;
+
+  border-bottom: 1px solid #c4c4c4
+}
+
+.list-info__item-title {
+  margin: 0;
+  padding-top: 14px;
+
+  font-size: 16px;
+  line-height: 140%;
+  color: #394959;
+}
+
+.list-info__item-value {
+  padding: 0;
+
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 140%;
+  color: #1f1e25;
+
+  background-color: transparent;
+  border: none;
+}
+
+.list-info__item-tick {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 140%;
+  color: #1f1e25;
+}
+
+.list-info__item-wrapper {
+  margin-left: auto;
+  padding-top: 11px;
+}

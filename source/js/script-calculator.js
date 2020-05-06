@@ -35,14 +35,33 @@
   var insuranceLifeElement = document.querySelector('.list-step-two__additional--insurance-life');
   var textAmountElement = document.querySelector('.list-offers__item-text-amount--js');
   var beforeTitleElement = document.querySelector('.list-step-two__item-title');
+  var labelContributtion = document.querySelector('.list-step-two__item--contributtion');
+  var playerProjectElement = document.querySelector('.list-step-two__additional--player-project');
+  var playerProjectCheckbox = document.querySelector('.list-step-two__checkbox--player-project');
+  var ourOfferButton = document.querySelector('.our-offer__btn');
+  var stepThree = document.querySelector('.step-three');
+  var applicationNumberElement = document.querySelector('.list-info__item-value--application-number');
+  var goalElement = document.querySelector('.list-info__item-value--goal');
+  var priceInFormElement = document.querySelector('.list-info__item-value--price');
+  var contributionInFormElement = document.querySelector('.list-info__item-value--contribution');
+  var timeYearsInFormElement = document.querySelector('.list-info__item-value--time-years');
+  var contributionInFormItem = document.querySelector('.list-info__item--contribution');
+  var userName = document.querySelector('#name');
+  var userTel = document.querySelector('#tel');
+  var userEmail = document.querySelector('#email');
+  var btnSubmit = document.querySelector('.step-three_btn-submit');
+  var form = document.querySelector('.form-post-info');
 
   var maternityСapital = 470000;
 
   var monthInYear = 12;
+  var numberApplication = 11;
 
   var isPercentCreditText = true;
   var isFormNoValid = false;
+  var isStorageSupport = true;
 
+  var storage = {};
   var rangePercent = {
     min: 10,
     max: 100
@@ -54,6 +73,15 @@
     amountFromMounth: 0,
     minAmount: 0
   };
+
+  try {
+    storage.name = localStorage.getItem('name');
+    storage.tel = localStorage.getItem('tel');
+    storage.email = localStorage.getItem('email');
+    storage.numberApplication = localStorage.getItem('application-number');
+  } catch (err) {
+    isStorageSupport = false;
+  }
 
   var isFormNoValidCheck = function (formNoValid, input) {
     if (formNoValid) {
@@ -75,7 +103,7 @@
     return valuePriceReturn;
   };
 
-  var percentCreditCalculator = function (valuePrice, valueContribution, forText, isMaternityСapital, isCASCO) {
+  var percentCreditCalculator = function (valuePrice, valueContribution, forText, isMaternityСapital, isCASCO, isPlayerProject) {
     var sum = 0;
     if (isMaternityСapital) {
       if (valueContribution < (valuePrice * 0.15)) {
@@ -120,6 +148,32 @@
         }
       };
     }
+    if (isPlayerProject) {
+      if (valuePrice < 750000) {
+        sum = 0.15;
+        if (forText === true) {
+          sum = '15';
+        }
+      }
+
+      if (valuePrice >= 750000 && valuePrice < 2000000) {
+        sum = 0.125;
+        if (forText === true) {
+          sum = '12,5';
+        }
+      }
+
+      if (valuePrice >= 2000000) {
+        sum = 0.095;
+        if (forText === true) {
+          sum = '9,5';
+        }
+      }
+
+      if (playerProjectCheckbox.checked) {
+        sum -= 0.005;
+      };
+    }
     return sum;
   };
 
@@ -143,6 +197,28 @@
   var selectedOption = function () {
     ourOffer.classList.remove('our-offer--none');
     stepTwo.classList.remove('step-two--none');
+
+    if (storage.name) {
+      userName.textContent = storage.name;
+      userTel.textContent = storage.tel;
+      userName.focus();
+    } else {
+      userTel.focus();
+    }
+
+    btnSubmit.addEventListener('click', function () {
+      if (isStorageSupport) {
+        localStorage.setItem('name', userName.textContent);
+        localStorage.setItem('tel', userTel.textContent);
+        // localStorage.setItem('email', userEmail.textContent);
+      }
+    });
+
+    form.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      window.thanksSection.openThanksSection();
+      numberApplication += 1;
+    });
   };
 
   var selectedOptionMortgage = function () {
@@ -168,10 +244,17 @@
     };
 
     var infoCredits = {
-      price: 2000000,
-      contribution: 200000,
-      contributionNumber: 10,
-      timeYears: 5
+      price: startInfoCredits.price,
+      contribution: startInfoCredits.contribution,
+      contributionNumber: startInfoCredits.contributionNumber,
+      timeYears: startInfoCredits.timeYears
+    };
+
+    var infosForStepThree = {
+      goal: 'Ипотека',
+      price: infoCredits.price,
+      contribution: infoCredits.contribution,
+      timeYears: infoCredits.timeYears
     };
 
     var minInputValueContribution = infoCredits.price * infoCredits.contributionNumber / 100;
@@ -196,10 +279,16 @@
       infoCreditsOurOffers.contributionNumber = percentCreditCalculator((obj.price), (obj.contribution), isPercentCreditText, true);
       infoCreditsOurOffers.amountFromMounth = Number(annuity);
       infoCreditsOurOffers.minAmount = Number(requiredRevenueCompute(annuity));
-      payCradits.textContent = infoCreditsOurOffers.amount.toLocaleString();
+      payCradits.textContent = Number(infoCreditsOurOffers.amount).toLocaleString();
       percentCreditElement.textContent = infoCreditsOurOffers.contributionNumber;
-      payMonth.textContent = infoCreditsOurOffers.amountFromMounth.toLocaleString();
+      payMonth.textContent = Number(infoCreditsOurOffers.amountFromMounth).toLocaleString();
       requiredRevenueElement.textContent = infoCreditsOurOffers.minAmount.toLocaleString();
+
+      stepThree.classList.add('step-three--none');
+
+      infosForStepThree.price = infoCredits.price;
+      infosForStepThree.contribution = infoCredits.contribution;
+      infosForStepThree.timeYears = infoCredits.timeYears;
 
       isMinAmoutCredit();
       isAmoutCredit();
@@ -210,7 +299,7 @@
     });
     maternityСapitalElement.classList.remove('list-step-two__additional--none');
     inputValuePrice.textContent = Number(startInfoCredits.price).toLocaleString();
-    inputValueContribution.textContent = startInfoCredits.contribution;
+    inputValueContribution.textContent = Number(startInfoCredits.contribution).toLocaleString();
     minPriceElement.textContent = startInfoCredits.minPrice.toLocaleString();
     maxPriceElement.textContent = startInfoCredits.maxPrice.toLocaleString();
     timeCredit.textContent = startInfoCredits.timeYears;
@@ -225,42 +314,56 @@
     rangeTextStartElement.textContent = startInfoCredits.minTimeYears;
     rangeTextFinishElement.textContent = startInfoCredits.maxTimeYears;
     textAmountElement.textContent = startInfoCreditsText.textAmountElement;
+    labelContributtion.classList.remove('list-step-two__item--contributtion-none');
+    contributionInFormItem.classList.remove('list-info__item--contribution-none');
     calculatorCompute(startInfoCredits);
 
     var plusOrMinusAmountElement = function () {
-      inputValuePrice.textContent = Number(infoCredits.price);
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
       infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValueContribution.textContent = infoCredits.contribution;
+      inputValueContribution.textContent = Number(infoCredits.contribution).toLocaleString();
 
       calculatorCompute(infoCredits);
     };
 
     plusAmountElement.addEventListener('click', function () {
       infoCredits.price += startInfoCredits.step;
+      if (infoCredits.price >= startInfoCredits.maxPrice) {
+        infoCredits.price = startInfoCredits.maxPrice;
+        inputValuePrice.textContent = infoCredits.price;
+      }
       plusOrMinusAmountElement();
     });
 
     minusAmountElement.addEventListener('click', function () {
       infoCredits.price -= startInfoCredits.step;
+      if (infoCredits.price <= startInfoCredits.minPrice) {
+        infoCredits.price = startInfoCredits.minPrice;
+        inputValuePrice.textContent = infoCredits.price;
+      }
       plusOrMinusAmountElement();
+    });
+
+    inputValuePrice.addEventListener('click', (evt) => {
+      var text = evt.target.textContent;
+      inputValuePrice.textContent = text.replace(/\s/g, '');
     });
 
     inputValuePrice.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
 
       if (!isNaN(text)) {
-        infoCredits.price = Number(text);
-        inputValuePrice.textContent = Number(text);
-        infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-        inputValuePrice.textContent = infoCredits.price;
-      } else {
-        inputValuePrice.textContent = infoCredits.price;
-        isFormNoValid = true;
+        text = text.replace(/\s/g, '');
+        inputValuePrice.textContent = text;
       }
     });
 
     inputValuePrice.addEventListener('blur', function (evt) {
       var text = evt.target.textContent;
+
+      if (!isNaN(text)) {
+        infoCredits.price = text;
+      }
 
       if (!isNaN(text) && text <= startInfoCredits.minPrice) {
         infoCredits.price = startInfoCredits.minPrice;
@@ -272,20 +375,46 @@
         evt.target.textContent = infoCredits.price;
       }
 
-      inputValuePrice.textContent = Number(text);
       infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValuePrice.textContent = infoCredits.price;
+      inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
+    });
+
+    inputValueContribution.addEventListener('click', (evt) => {
+      var text = evt.target.textContent;
+      inputValueContribution.textContent = text.replace(/\s/g, '');
     });
 
     inputValueContribution.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
 
       if (!isNaN(text)) {
+        text = text.replace(/\s/g, '');
+        inputValueContribution.textContent = text;
+      }
+
+      // if (!isNaN(text)) {
+      //   infoCredits.contribution = text;
+      //   inputValueContribution.textContent = infoCredits.contribution;
+      // } else {
+      //   inputValueContribution.textContent = infoCredits.contribution;
+      //   isFormNoValid = true;
+      // }
+
+      // if (text >= minInputValueContribution && text <= infoCredits.price) {
+      //   var infoCreditsContributionDecimal = new Decimal(infoCredits.contribution);
+      //   var rangeTextDinamyc = (infoCreditsContributionDecimal.div(infoCredits.price)).div(0.01).toFixed(0);
+      //   infoCredits.contributionNumber = rangeTextDinamyc;
+      //   rangeText.textContent = infoCredits.contributionNumber;
+      //   rangeInputContribution.value = infoCredits.contributionNumber;
+      // }
+    });
+
+    inputValueContribution.addEventListener('blur', function (evt) {
+      var text = evt.target.textContent;
+
+      if (!isNaN(text)) {
         infoCredits.contribution = text;
-        inputValueContribution.textContent = infoCredits.contribution;
-      } else {
-        inputValueContribution.textContent = infoCredits.contribution;
-        isFormNoValid = true;
       }
 
       if (text >= minInputValueContribution && text <= infoCredits.price) {
@@ -295,10 +424,6 @@
         rangeText.textContent = infoCredits.contributionNumber;
         rangeInputContribution.value = infoCredits.contributionNumber;
       }
-    });
-
-    inputValueContribution.addEventListener('blur', function (evt) {
-      var text = evt.target.textContent;
 
       if (!isNaN(text) && text <= minInputValueContribution) {
         infoCredits.contribution = minInputValueContribution;
@@ -307,6 +432,7 @@
         rangeInputContribution.value = infoCredits.contributionNumber;
         rangeText.textContent = infoCredits.contributionNumber;
       }
+
       if (!isNaN(text) && text >= infoCredits.price) {
         infoCredits.contribution = infoCredits.price;
         inputValueContribution.textContent = infoCredits.contribution;
@@ -314,6 +440,8 @@
         rangeInputContribution.value = infoCredits.contributionNumber;
         rangeText.textContent = infoCredits.contributionNumber;
       }
+
+      inputValueContribution.textContent = Number(infoCredits.contribution).toLocaleString();
     });
 
     timeCredit.addEventListener('input', (evt) => {
@@ -351,12 +479,12 @@
       infoCredits.contributionNumber = rangeInputContribution.value;
       rangeText.textContent = rangeInputContribution.value;
       infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValueContribution.textContent = infoCredits.contribution;
+      inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
     });
 
     rangeInputYearsCredit.addEventListener('change', function () {
       infoCredits.timeYears = rangeInputYearsCredit.value;
-      timeCredit.textContent = infoCredits.timeYears;
+      timeCredit.textContent = infoCredits.timeYears.toLocaleString();
     });
 
     Array.prototype.forEach.call(rangeInputElements, function (rangeInputElement) {
@@ -379,6 +507,16 @@
       checkboxIf.addEventListener('change', function () {
         calculatorCompute(infoCredits);
       });
+    });
+
+    ourOfferButton.addEventListener('click', function () {
+      stepThree.classList.remove('step-three--none');
+
+      applicationNumberElement.textContent = '00' + numberApplication + '';
+      goalElement.textContent = infosForStepThree.goal;
+      priceInFormElement.textContent = infosForStepThree.price.toLocaleString();
+      contributionInFormElement.textContent = infosForStepThree.contribution.toLocaleString();
+      timeYearsInFormElement.textContent = infosForStepThree.timeYears;
     });
   };
 
@@ -404,10 +542,17 @@
     };
 
     var infoCredits = {
-      price: 2000000,
-      contribution: 400000,
-      contributionNumber: 20,
-      timeYears: 5
+      price: startInfoCredits.price,
+      contribution: startInfoCredits.contribution,
+      contributionNumber: startInfoCredits.contributionNumber,
+      timeYears: startInfoCredits.timeYears
+    };
+
+    var infosForStepThree = {
+      goal: 'Автокредит',
+      price: infoCredits.price,
+      contribution: infoCredits.contribution,
+      timeYears: infoCredits.timeYears
     };
 
     var minInputValueContribution = infoCredits.price * infoCredits.contributionNumber / 100;
@@ -437,6 +582,12 @@
       payMonth.textContent = infoCreditsOurOffers.amountFromMounth.toLocaleString();
       requiredRevenueElement.textContent = infoCreditsOurOffers.minAmount.toLocaleString();
 
+      stepThree.classList.add('step-three--none');
+
+      infosForStepThree.price = infoCredits.price;
+      infosForStepThree.contribution = infoCredits.contribution;
+      infosForStepThree.timeYears = infoCredits.timeYears;
+
       isMinAmoutCredit();
       isAmoutCredit();
     };
@@ -447,7 +598,7 @@
     cascoElement.classList.remove('list-step-two__additional--none');
     insuranceLifeElement.classList.remove('list-step-two__additional--none');
     inputValuePrice.textContent = Number(startInfoCredits.price).toLocaleString();
-    inputValueContribution.textContent = startInfoCredits.contribution;
+    inputValueContribution.textContent = startInfoCredits.contribution.toLocaleString();
     minPriceElement.textContent = startInfoCredits.minPrice.toLocaleString();
     maxPriceElement.textContent = startInfoCredits.maxPrice.toLocaleString();
     timeCredit.textContent = startInfoCredits.timeYears;
@@ -462,43 +613,56 @@
     rangeTextStartElement.textContent = startInfoCredits.minTimeYears;
     rangeTextFinishElement.textContent = startInfoCredits.maxTimeYears;
     textAmountElement.textContent = startInfoCreditsText.textAmountElement;
+    labelContributtion.classList.remove('list-step-two__item--contributtion-none');
+    contributionInFormItem.classList.remove('list-info__item--contribution-none');
     calculatorCompute(startInfoCredits);
 
     var plusOrMinusAmountElement = function () {
-      inputValuePrice.textContent = Number(infoCredits.price);
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
       infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValueContribution.textContent = infoCredits.contribution;
+      inputValueContribution.textContent = Number(infoCredits.contribution).toLocaleString();
 
       calculatorCompute(infoCredits);
     };
 
     plusAmountElement.addEventListener('click', function () {
       infoCredits.price += startInfoCredits.step;
+      if (infoCredits.price >= startInfoCredits.maxPrice) {
+        infoCredits.price = startInfoCredits.maxPrice;
+        inputValuePrice.textContent = infoCredits.price;
+      }
       plusOrMinusAmountElement();
     });
 
     minusAmountElement.addEventListener('click', function () {
       infoCredits.price -= startInfoCredits.step;
+      if (infoCredits.price <= startInfoCredits.minPrice) {
+        infoCredits.price = startInfoCredits.minPrice;
+        inputValuePrice.textContent = infoCredits.price;
+      }
       plusOrMinusAmountElement();
+    });
+
+    inputValuePrice.addEventListener('click', (evt) => {
+      var text = evt.target.textContent;
+      inputValuePrice.textContent = text.replace(/\s/g, '');
     });
 
     inputValuePrice.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
 
       if (!isNaN(text)) {
-        inputValuePrice.textContent = Number(text);
-      }
-      if (text >= startInfoCredits.minPrice && text <= startInfoCredits.maxPrice) {
-        infoCredits.price = Number(text);
-        infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      } else {
-        inputValuePrice.textContent = infoCredits.price;
-        isFormNoValid = true;
+        text = text.replace(/\s/g, '');
+        inputValuePrice.textContent = text;
       }
     });
 
     inputValuePrice.addEventListener('blur', function (evt) {
       var text = evt.target.textContent;
+
+      if (!isNaN(text)) {
+        infoCredits.price = text;
+      }
 
       if (!isNaN(text) && text <= startInfoCredits.minPrice) {
         infoCredits.price = startInfoCredits.minPrice;
@@ -510,28 +674,79 @@
         evt.target.textContent = infoCredits.price;
       }
 
-      inputValuePrice.textContent = Number(text);
       infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValuePrice.textContent = infoCredits.price;
+      inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
     });
 
-    rangeInputContribution.addEventListener('change', function () {
-      infoCredits.contributionNumber = rangeInputContribution.value;
-      rangeText.textContent = rangeInputContribution.value;
-      infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValueContribution.textContent = infoCredits.contribution;
+    // inputValuePrice.addEventListener('input', (evt) => {
+    //   var text = evt.target.textContent;
+
+    //   if (!isNaN(text)) {
+    //     inputValuePrice.textContent = Number(text);
+    //   }
+    //   if (text >= startInfoCredits.minPrice && text <= startInfoCredits.maxPrice) {
+    //     infoCredits.price = Number(text);
+    //     infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
+    //   } else {
+    //     inputValuePrice.textContent = infoCredits.price;
+    //     isFormNoValid = true;
+    //   }
+    // });
+
+    // inputValuePrice.addEventListener('blur', function (evt) {
+    //   var text = evt.target.textContent;
+
+    //   if (!isNaN(text) && text <= startInfoCredits.minPrice) {
+    //     infoCredits.price = startInfoCredits.minPrice;
+    //     evt.target.textContent = infoCredits.price;
+    //   }
+
+    //   if (!isNaN(text) && text >= startInfoCredits.maxPrice) {
+    //     infoCredits.price = startInfoCredits.maxPrice;
+    //     evt.target.textContent = infoCredits.price;
+    //   }
+
+    //   inputValuePrice.textContent = Number(text);
+    //   infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
+    //   inputValuePrice.textContent = infoCredits.price;
+    // });
+
+    inputValueContribution.addEventListener('click', (evt) => {
+      var text = evt.target.textContent;
+      inputValueContribution.textContent = text.replace(/\s/g, '');
     });
 
     inputValueContribution.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
 
       if (!isNaN(text)) {
-        text = Number(text);
+        text = text.replace(/\s/g, '');
+        inputValueContribution.textContent = text;
+      }
+
+      // if (!isNaN(text)) {
+      //   infoCredits.contribution = text;
+      //   inputValueContribution.textContent = infoCredits.contribution;
+      // } else {
+      //   inputValueContribution.textContent = infoCredits.contribution;
+      //   isFormNoValid = true;
+      // }
+
+      // if (text >= minInputValueContribution && text <= infoCredits.price) {
+      //   var infoCreditsContributionDecimal = new Decimal(infoCredits.contribution);
+      //   var rangeTextDinamyc = (infoCreditsContributionDecimal.div(infoCredits.price)).div(0.01).toFixed(0);
+      //   infoCredits.contributionNumber = rangeTextDinamyc;
+      //   rangeText.textContent = infoCredits.contributionNumber;
+      //   rangeInputContribution.value = infoCredits.contributionNumber;
+      // }
+    });
+
+    inputValueContribution.addEventListener('blur', function (evt) {
+      var text = evt.target.textContent;
+
+      if (!isNaN(text)) {
         infoCredits.contribution = text;
-        inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
-      } else {
-        inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
-        isFormNoValid = true;
       }
 
       if (text >= minInputValueContribution && text <= infoCredits.price) {
@@ -541,30 +756,74 @@
         rangeText.textContent = infoCredits.contributionNumber;
         rangeInputContribution.value = infoCredits.contributionNumber;
       }
-    });
-
-    inputValueContribution.addEventListener('blur', function (evt) {
-      var text = evt.target.textContent;
 
       if (!isNaN(text) && text <= minInputValueContribution) {
         infoCredits.contribution = minInputValueContribution;
-        inputValueContribution.textContent = infoCredits.contribution;
         infoCredits.contributionNumber = rangePercent.min;
         rangeInputContribution.value = infoCredits.contributionNumber;
         rangeText.textContent = infoCredits.contributionNumber;
       }
+
       if (!isNaN(text) && text >= infoCredits.price) {
         infoCredits.contribution = infoCredits.price;
-        inputValueContribution.textContent = infoCredits.contribution;
         infoCredits.contributionNumber = rangePercent.max;
         rangeInputContribution.value = infoCredits.contributionNumber;
         rangeText.textContent = infoCredits.contributionNumber;
       }
+
+      inputValueContribution.textContent = Number(infoCredits.contribution).toLocaleString();
+    });
+
+    // inputValueContribution.addEventListener('input', (evt) => {
+    //   var text = evt.target.textContent;
+
+    //   if (!isNaN(text)) {
+    //     text = Number(text);
+    //     infoCredits.contribution = text;
+    //     inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
+    //   } else {
+    //     inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
+    //     isFormNoValid = true;
+    //   }
+
+    //   if (text >= minInputValueContribution && text <= infoCredits.price) {
+    //     var infoCreditsContributionDecimal = new Decimal(infoCredits.contribution);
+    //     var rangeTextDinamyc = (infoCreditsContributionDecimal.div(infoCredits.price)).div(0.01).toFixed(0);
+    //     infoCredits.contributionNumber = rangeTextDinamyc;
+    //     rangeText.textContent = infoCredits.contributionNumber;
+    //     rangeInputContribution.value = infoCredits.contributionNumber;
+    //   }
+    // });
+
+    // inputValueContribution.addEventListener('blur', function (evt) {
+    //   var text = evt.target.textContent;
+
+    //   if (!isNaN(text) && text <= minInputValueContribution) {
+    //     infoCredits.contribution = minInputValueContribution;
+    //     inputValueContribution.textContent = infoCredits.contribution;
+    //     infoCredits.contributionNumber = rangePercent.min;
+    //     rangeInputContribution.value = infoCredits.contributionNumber;
+    //     rangeText.textContent = infoCredits.contributionNumber;
+    //   }
+    //   if (!isNaN(text) && text >= infoCredits.price) {
+    //     infoCredits.contribution = infoCredits.price;
+    //     inputValueContribution.textContent = infoCredits.contribution;
+    //     infoCredits.contributionNumber = rangePercent.max;
+    //     rangeInputContribution.value = infoCredits.contributionNumber;
+    //     rangeText.textContent = infoCredits.contributionNumber;
+    //   }
+    // });
+
+    rangeInputContribution.addEventListener('change', function () {
+      infoCredits.contributionNumber = rangeInputContribution.value;
+      rangeText.textContent = rangeInputContribution.value;
+      infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
+      inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
     });
 
     rangeInputYearsCredit.addEventListener('change', function () {
       infoCredits.timeYears = rangeInputYearsCredit.value;
-      timeCredit.textContent = infoCredits.timeYears;
+      timeCredit.textContent = infoCredits.timeYears.toLocaleString();
     });
 
     timeCredit.addEventListener('input', (evt) => {
@@ -618,6 +877,16 @@
       checkboxIf.addEventListener('change', function () {
         calculatorCompute(infoCredits);
       });
+    });
+
+    ourOfferButton.addEventListener('click', function () {
+      stepThree.classList.remove('step-three--none');
+
+      applicationNumberElement.textContent = '00' + numberApplication + '';
+      goalElement.textContent = infosForStepThree.goal;
+      priceInFormElement.textContent = infosForStepThree.price.toLocaleString();
+      contributionInFormElement.textContent = infosForStepThree.contribution.toLocaleString();
+      timeYearsInFormElement.textContent = infosForStepThree.timeYears;
     });
   };
 
@@ -625,51 +894,36 @@
     var startInfoCreditsText = {
       beforeTitle: 'Сумма ',
       title: 'потребительского кредита',
-      textAmountElement: 'Сумму автокредита'
+      textAmountElement: 'Сумма кредита'
     };
 
     var startInfoCredits = {
       price: 2000000,
-      minPrice: 500000,
-      maxPrice: 5000000,
-      contribution: 400000,
-      contributionNumber: 20,
-      minContributionNumber: 20,
-      maxContributionNumber: 100,
+      minPrice: 50000,
+      maxPrice: 3000000,
       timeYears: 1,
       minTimeYears: 1,
-      maxTimeYears: 5,
+      maxTimeYears: 7,
       step: 50000,
-      minCreditAmount: 200000
+      minCreditAmount: 200000,
+      contribution: 0,
     };
 
     var infoCredits = {
-      price: 2000000,
-      contribution: 400000,
-      contributionNumber: 20,
-      timeYears: 5
+      price: startInfoCredits.price,
+      timeYears: startInfoCredits.timeYears
     };
 
-    var minInputValueContribution = infoCredits.price * infoCredits.contributionNumber / 100;
-
-    var isMinAmoutCredit = function () {
-      if (infoCreditsOurOffers.amount <= startInfoCredits.minCreditAmount) {
-        ourOffer.classList.add('our-offer--none');
-        minAmoutCreditElement.classList.remove('min-amout-credit--none');
-      }
-    };
-
-    var isAmoutCredit = function () {
-      if (infoCreditsOurOffers.amount >= startInfoCredits.minCreditAmount) {
-        ourOffer.classList.remove('our-offer--none');
-        minAmoutCreditElement.classList.add('min-amout-credit--none');
-      }
+    var infosForStepThree = {
+      goal: 'Потребительский кредит',
+      price: infoCredits.price,
+      timeYears: infoCredits.timeYears
     };
 
     var calculatorCompute = function (obj) {
-      var annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution))), (percentCreditCalculator((obj.price), (obj.contribution), false, false, true)), (obj.timeYears));
-      infoCreditsOurOffers.amount = payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution));
-      infoCreditsOurOffers.contributionNumber = percentCreditCalculator((obj.price), (obj.contribution), isPercentCreditText, false, true);
+      var annuity = annuityCompute((payCraditsCalculator(inputValueContribution, (obj.price), (obj.contribution))), (percentCreditCalculator((obj.price), (obj.contribution), false, false, false, true)), (obj.timeYears));
+      infoCreditsOurOffers.amount = obj.price;
+      infoCreditsOurOffers.contributionNumber = percentCreditCalculator((obj.price), (obj.contribution), isPercentCreditText, false, false, true);
       infoCreditsOurOffers.amountFromMounth = Number(annuity);
       infoCreditsOurOffers.minAmount = Number(requiredRevenueCompute(annuity));
       payCradits.textContent = infoCreditsOurOffers.amount.toLocaleString();
@@ -677,69 +931,78 @@
       payMonth.textContent = infoCreditsOurOffers.amountFromMounth.toLocaleString();
       requiredRevenueElement.textContent = infoCreditsOurOffers.minAmount.toLocaleString();
 
-      isMinAmoutCredit();
-      isAmoutCredit();
+      stepThree.classList.add('step-three--none');
+
+      infosForStepThree.price = infoCredits.price;
+      infosForStepThree.timeYears = infoCredits.timeYears;
     };
 
     Array.prototype.forEach.call(labelElements, function (labelElement) {
       labelElement.classList.add('list-step-two__additional--none');
     });
-    cascoElement.classList.remove('list-step-two__additional--none');
-    insuranceLifeElement.classList.remove('list-step-two__additional--none');
+    playerProjectElement.classList.remove('list-step-two__additional--none');
     inputValuePrice.textContent = Number(startInfoCredits.price).toLocaleString();
-    inputValueContribution.textContent = startInfoCredits.contribution;
     minPriceElement.textContent = startInfoCredits.minPrice.toLocaleString();
     maxPriceElement.textContent = startInfoCredits.maxPrice.toLocaleString();
     timeCredit.textContent = startInfoCredits.timeYears;
     titleTypeElement.textContent = startInfoCreditsText.title;
-    rangeInputContribution.min = startInfoCredits.minContributionNumber;
-    rangeInputContribution.value = startInfoCredits.minContributionNumber;
-    rangeInputContribution.max = startInfoCredits.maxContributionNumber;
     rangeInputYearsCredit.min = startInfoCredits.minTimeYears;
     rangeInputYearsCredit.value = startInfoCredits.minTimeYears;
     rangeInputYearsCredit.max = startInfoCredits.maxTimeYears;
-    rangeText.textContent = infoCredits.contributionNumber;
     rangeTextStartElement.textContent = startInfoCredits.minTimeYears;
     rangeTextFinishElement.textContent = startInfoCredits.maxTimeYears;
     textAmountElement.textContent = startInfoCreditsText.textAmountElement;
     beforeTitleElement.textContent = startInfoCreditsText.beforeTitle;
+    labelContributtion.classList.add('list-step-two__item--contributtion-none');
+    contributionInFormItem.classList.add('list-info__item--contribution-none');
     calculatorCompute(startInfoCredits);
 
     var plusOrMinusAmountElement = function () {
-      inputValuePrice.textContent = Number(infoCredits.price);
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
       infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValueContribution.textContent = infoCredits.contribution;
+      inputValueContribution.textContent = Number(infoCredits.contribution).toLocaleString();
 
       calculatorCompute(infoCredits);
     };
 
     plusAmountElement.addEventListener('click', function () {
       infoCredits.price += startInfoCredits.step;
+      if (infoCredits.price >= startInfoCredits.maxPrice) {
+        infoCredits.price = startInfoCredits.maxPrice;
+        inputValuePrice.textContent = infoCredits.price;
+      }
       plusOrMinusAmountElement();
     });
 
     minusAmountElement.addEventListener('click', function () {
       infoCredits.price -= startInfoCredits.step;
+      if (infoCredits.price <= startInfoCredits.minPrice) {
+        infoCredits.price = startInfoCredits.minPrice;
+        inputValuePrice.textContent = infoCredits.price;
+      }
       plusOrMinusAmountElement();
+    });
+
+    inputValuePrice.addEventListener('click', (evt) => {
+      var text = evt.target.textContent;
+      inputValuePrice.textContent = text.replace(/\s/g, '');
     });
 
     inputValuePrice.addEventListener('input', (evt) => {
       var text = evt.target.textContent;
 
       if (!isNaN(text)) {
-        inputValuePrice.textContent = Number(text);
-      }
-      if (text >= startInfoCredits.minPrice && text <= startInfoCredits.maxPrice) {
-        infoCredits.price = Number(text);
-        infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      } else {
-        inputValuePrice.textContent = infoCredits.price;
-        isFormNoValid = true;
+        text = text.replace(/\s/g, '');
+        inputValuePrice.textContent = text;
       }
     });
 
     inputValuePrice.addEventListener('blur', function (evt) {
       var text = evt.target.textContent;
+
+      if (!isNaN(text)) {
+        infoCredits.price = text;
+      }
 
       if (!isNaN(text) && text <= startInfoCredits.minPrice) {
         infoCredits.price = startInfoCredits.minPrice;
@@ -751,56 +1014,43 @@
         evt.target.textContent = infoCredits.price;
       }
 
-      inputValuePrice.textContent = Number(text);
       infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValuePrice.textContent = infoCredits.price;
+      inputValueContribution.textContent = infoCredits.contribution.toLocaleString();
+      inputValuePrice.textContent = Number(infoCredits.price).toLocaleString();
     });
 
-    rangeInputContribution.addEventListener('change', function () {
-      infoCredits.contributionNumber = rangeInputContribution.value;
-      rangeText.textContent = rangeInputContribution.value;
-      infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
-      inputValueContribution.textContent = infoCredits.contribution;
-    });
+    // inputValuePrice.addEventListener('input', (evt) => {
+    //   var text = evt.target.textContent;
 
-    inputValueContribution.addEventListener('input', (evt) => {
-      var text = evt.target.textContent;
+    //   if (!isNaN(text)) {
+    //     inputValuePrice.textContent = Number(text);
+    //   }
+    //   if (text >= startInfoCredits.minPrice && text <= startInfoCredits.maxPrice) {
+    //     infoCredits.price = Number(text);
+    //     infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
+    //   } else {
+    //     inputValuePrice.textContent = infoCredits.price;
+    //     isFormNoValid = true;
+    //   }
+    // });
 
-      if (!isNaN(text)) {
-        infoCredits.contribution = text;
-        inputValueContribution.textContent = infoCredits.contribution;
-      } else {
-        inputValueContribution.textContent = infoCredits.contribution;
-        isFormNoValid = true;
-      }
+    // inputValuePrice.addEventListener('blur', function (evt) {
+    //   var text = evt.target.textContent;
 
-      if (text >= minInputValueContribution && text <= infoCredits.price) {
-        var infoCreditsContributionDecimal = new Decimal(infoCredits.contribution);
-        var rangeTextDinamyc = (infoCreditsContributionDecimal.div(infoCredits.price)).div(0.01).toFixed(0);
-        infoCredits.contributionNumber = rangeTextDinamyc;
-        rangeText.textContent = infoCredits.contributionNumber;
-        rangeInputContribution.value = infoCredits.contributionNumber;
-      }
-    });
+    //   if (!isNaN(text) && text <= startInfoCredits.minPrice) {
+    //     infoCredits.price = startInfoCredits.minPrice;
+    //     evt.target.textContent = infoCredits.price;
+    //   }
 
-    inputValueContribution.addEventListener('blur', function (evt) {
-      var text = evt.target.textContent;
+    //   if (!isNaN(text) && text >= startInfoCredits.maxPrice) {
+    //     infoCredits.price = startInfoCredits.maxPrice;
+    //     evt.target.textContent = infoCredits.price;
+    //   }
 
-      if (!isNaN(text) && text <= minInputValueContribution) {
-        infoCredits.contribution = minInputValueContribution;
-        inputValueContribution.textContent = infoCredits.contribution;
-        infoCredits.contributionNumber = rangePercent.min;
-        rangeInputContribution.value = infoCredits.contributionNumber;
-        rangeText.textContent = infoCredits.contributionNumber;
-      }
-      if (!isNaN(text) && text >= infoCredits.price) {
-        infoCredits.contribution = infoCredits.price;
-        inputValueContribution.textContent = infoCredits.contribution;
-        infoCredits.contributionNumber = rangePercent.max;
-        rangeInputContribution.value = infoCredits.contributionNumber;
-        rangeText.textContent = infoCredits.contributionNumber;
-      }
-    });
+    //   inputValuePrice.textContent = Number(text);
+    //   infoCredits.contribution = infoCredits.price * infoCredits.contributionNumber / 100;
+    //   inputValuePrice.textContent = infoCredits.price;
+    // });
 
     rangeInputYearsCredit.addEventListener('change', function () {
       infoCredits.timeYears = rangeInputYearsCredit.value;
@@ -859,12 +1109,22 @@
         calculatorCompute(infoCredits);
       });
     });
+
+    ourOfferButton.addEventListener('click', function () {
+      stepThree.classList.remove('step-three--none');
+
+      applicationNumberElement.textContent = '00' + numberApplication + '';
+      goalElement.textContent = infosForStepThree.goal;
+      priceInFormElement.textContent = infosForStepThree.price.toLocaleString();
+      timeYearsInFormElement.textContent = infosForStepThree.timeYears;
+    });
   };
 
   window.сalculator = {
     selectedOption: selectedOption,
     selectedOptionMortgage: selectedOptionMortgage,
     selectedOptionCarCredit: selectedOptionCarCredit,
-    selectedOptionCredit: selectedOptionCredit
+    selectedOptionCredit: selectedOptionCredit,
+    stepThree: stepThree
   };
 })();

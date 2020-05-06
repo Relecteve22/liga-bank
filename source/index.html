@@ -201,7 +201,6 @@
     <section id="calculator" class="calculator">
       <div class="calculator__container">
         <h2 class="calculator__title">Кредитный калькулятор</h2>
-        <form action="https://echo.htmlacademy.ru" method="post" class="calculator__form">
           <div class="calculator__wrapper-step-one-ang-two">
             <div class="calculator__container-for-step-one-and-two">
               <div class="calculator__step-one step-one">
@@ -246,7 +245,7 @@
                       <span class="range-text__item">рублей</span>
                     </div>
                   </li>
-                  <li class="list-step-two__item">
+                  <li class="list-step-two__item list-step-two__item--contributtion">
                     <h4 class="list-step-two__item-title">
                       Первоначальный взнос
                     </h4>
@@ -296,19 +295,24 @@
                   </li>
                 </ul>
                 <label class="list-step-two__additional list-step-two__additional--maternity-capital">
-                  <input type="checkbox" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--additional" required>
+                  <input type="checkbox" name="additional-maternity-capital" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--additional">
                   <span class="list-step-two__checkbox-indicator"></span>
                   <span class="list-step-two__text-additional">Использовать материнский капитал</span>
                 </label>
                 <label class="list-step-two__additional list-step-two__additional--CASCO">
-                  <input type="checkbox" name="additional-CASCO" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--CASCO" required>
+                  <input type="checkbox" name="additional-CASCO" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--CASCO">
                   <span class="list-step-two__checkbox-indicator"></span>
                   <span class="list-step-two__text-additional">Оформить КАСКО в нашем банке</span>
                 </label>
                 <label class="list-step-two__additional list-step-two__additional--insurance-life">
-                  <input type="checkbox" name="additional-insurance-life" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--insurance-life" required>
+                  <input type="checkbox" name="additional-insurance-life" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--insurance-life">
                   <span class="list-step-two__checkbox-indicator"></span>
                   <span class="list-step-two__text-additional">Оформить Страхование жизни в нашем банке</span>
+                </label>
+                <label class="list-step-two__additional list-step-two__additional--player-project">
+                  <input type="checkbox" name="additional-insurance-life" class="visually-hidden list-step-two__checkbox list-step-two__checkbox--player-project">
+                  <span class="list-step-two__checkbox-indicator"></span>
+                  <span class="list-step-two__text-additional">Участник зарплатного проекта нашего банка</span>
                 </label>
               </div>
             </div>
@@ -327,7 +331,7 @@
                   </li>
                   <li class="list-offers__item">
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
-                      <span class="list-offers__item-text-pay-month list-offers__item-text-pay-month--js">27 868</span>
+                      <span class="list-offers__item-text-pay-month list-offers__item-text-pay-month--js"></span>
                       <span class="list-offers__item-text-type">рублей</span>
                     </div>
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
@@ -336,7 +340,7 @@
                   </li>
                   <li class="list-offers__item">
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
-                      <span class="list-offers__item-text-percent list-offers__item-text-percent--js">9,40</span>
+                      <span class="list-offers__item-text-percent list-offers__item-text-percent--js"></span>
                       <span class="list-offers__item-text-type">%</span>
                     </div>
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
@@ -345,7 +349,7 @@
                   </li>
                   <li class="list-offers__item">
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--one">
-                      <span class="list-offers__item-text-income-month list-offers__item-text-income-month--js">61 929</span>
+                      <span class="list-offers__item-text-income-month list-offers__item-text-income-month--js"></span>
                       <span class="list-offers__item-text-type">рублей</span>
                     </div>
                     <div class="list-offers__item-wrapper-text list-offers__item-wrapper-text--two">
@@ -369,13 +373,84 @@
               </div>
             </div>
           </div>
-          <!-- <div class="calculator__step-three">
-          </div> -->
-        </form>
+          <div class="calculator__step-three step-three step-three--none">
+            <h3 class="step-three__title">Шаг 3. Оформление заявки</h3>
+            <form id="form-post-info" class="step-three__form form-post-info"  method="post"
+            enctype="multipart/form-data"
+            action="https://js.dump.academy/keksobooking"
+            autocomplete="off">
+              <ul class="form-post-info__list-info list-info">
+                <li class="list-info__item">
+                  <h4 class="list-info__item-title">Номер заявки</h4>
+                  <div class="list-info__item-wrapper">
+                    <span class="list-info__item-tick">№</span>
+                    <span class="list-info__item-value list-info__item-value--application-number" id="application-number"></span>
+                  </div>
+                </li>
+                <li class="list-info__item">
+                  <h4 class="list-info__item-title">Цель кредита</h4>
+                  <div class="list-info__item-wrapper">
+                    <span class="list-info__item-value list-info__item-value--goal"></span>
+                  </div>
+                </li>
+                <li class="list-info__item">
+                  <h4 class="list-info__item-title">Стоимость недвижимости</h4>
+                  <div class="list-info__item-wrapper">
+                    <span class="list-info__item-value list-info__item-value--price"></span>
+                    <span class="list-info__item-tick">рублей</span>
+                  </div>
+                </li>
+                <li class="list-info__item list-info__item--contribution">
+                  <h4 class="list-info__item-title">Первоначальный взнос</h4>
+                  <div class="list-info__item-wrapper">
+                    <span class="list-info__item-value list-info__item-value--contribution"></span>
+                    <span class="list-info__item-tick">рублей</span>
+                  </div>
+                </li>
+                <li class="list-info__item">
+                  <h4 class="list-info__item-title">Срок кредитования</h4>
+                  <div class="list-info__item-wrapper">
+                    <span class="list-info__item-value list-info__item-value--time-years">5</span>
+                    <span class="list-info__item-tick">лет</span>
+                  </div>
+                </li>
+              </ul>
+              <ul  class="form-post-info__list-info-me list-info-me js">
+                <li class="list-info-me__item list-info-me__item--name">
+                  <label class="list-info-me__item-label">
+                    <input class="list-info-me__item__input list-info-me__input--name" id="name" type="text" name="name" placeholder="ФИО" aria-label="Фамилия Имя Отчество" required>
+                  </label>
+                </li>
+                <li class="list-info-me__item">
+                  <label class="list-info-me__item-label">
+                    <input class="list-info-me__item__input js__input--tel" id="tel" type="tel" name="phone" placeholder="Телефон" pattern="[\+]\d{1}[\(]\d{3}[\)]\d{3}[\-]\d{2}[\-]\d{2}" data-inputmask="+{7}(000)000-00-00" aria-label="Ваш телефон" required>
+                  </label>
+                </li>
+                <li class="list-info-me__item">
+                  <label class="list-info-me__item-label">
+                    <input class="list-info-me__item__input list-info-me__input--email" type="email" name="email" placeholder="E-mail" aria-label="E-mail" required>
+                  </label>
+                </li>
+              </ul>
+              <button class="step-three_btn-submit" type="submit">Отправить</button>
+            </form>
+          </div>
       </div>
     </section>
   </main>
   <div class="overlay"></div>
+  <div class="thanks-section">
+    <div class="thanks-section__container">
+      <button class="thanks-section__close">
+        <span class="visually-hidden">Закрыть попап</span>
+      </button>
+      <h2 class="thanks-section__title">Спасибо за обращение в наш банк.</h2>
+      <p class="thanks-section__description">
+        Наш менеджер скоро свяжется с вами
+        по указанному номеру телефона.
+      </p>
+    </div>
+  </div>
   <section class="popup">
     <div class="popup__container">
       <a class="popup__logo">
